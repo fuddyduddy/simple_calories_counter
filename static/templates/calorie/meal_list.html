@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div>Edit/Delete Meal Here.</div>
+<div>{{ testContext }}</div>
+
+<div id="meal-list" class="not-visible"></div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md">
+            {% if is_paginated %}
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                {% if page_obj.has_previous %}
+                    <li class="page-item"><a href="?page={{ page_obj.previous_page_number }}" class="page-link">&laquo;</a></li>
+                {% else %}
+                    <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
+                {% endif %}
+                {% for i in paginator.page_range %}
+                    {% if page_obj.number == i %}
+                    <li class="page-item active"><span class="page-link">{{ i }} <span class="sr-only">(current)</span></span></li>
+                    {% else %}
+                    <li class="page-item"><a href="?page={{ i }}" class="page-link">{{ i }}</a></li>
+                    {% endif %}
+                {% endfor %}
+                {% if page_obj.has_next %}
+                    <li class="page-item"><a href="?page={{ page_obj.next_page_number }}" class="page-link">&raquo;</a></li>
+                {% else %}
+                    <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
+                {% endif %}
+                </ul>
+            </nav>
+            {% else %}
+            <div> Not paginated. </div>
+            {% endif %}
+        </div>
+        <div class="col-md"></div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-9">
+            <table>
+                <tbody>
+                    {% for meal in meal_list %}
+                    <tr>
+                        <td class="col-3">Meal ID: </td>
+                        <td class="col-6">{{ meal.pk }}</td>
+                        <td class="col-3" rowspan="7">
+                            <a href="{% url 'meal_delete' meal.pk %}">Delete this record</a>
+                            {% comment %} <div id="btn-box" class="mt-5">
+                                <button type="submit" class="ui primary button" value="{{ meal.pk }}">Delete This Record.</button>
+                            </div> {% endcomment %}
+                        </td>
+                    </tr>
+                    <tr>
+                        {% comment %} For foreign key, to access their headers, need to go 1 more layer down to foreign key's field like "meal.food.name" {% endcomment %}
+                        <td class="col-3">Meal name: </td><td class="col-6">{{ meal.food.name }}</td>
+                    </tr>
+                    <tr>
+                        <td class="col-3">Record Date: </td><td class="col-6">{{ meal.date | default_if_none:"N/A" }}</td>
+                    </tr>
+                    <tr>
+                        {% comment %} https://stackoverflow.com/questions/70833524/datetimefield-only-show-time-in-html-template {% endcomment %}
+                        {% comment %} <td>{{ meal.datetimeNullable | date:"H, i, s" }}</td> {% endcomment %}
+                        <td class="col-3">Record Time: </td><td class="col-6">{{ meal.datetimeNullable | date:"g:i a" | default_if_none:"N/A" }}</td>
+                    </tr>
+                    <tr>
+                        <td class="col-3">Served Section: </td><td class="col-6">{{ meal.mealTime | default_if_none:"N/A" }}</td>
+                    </tr>
+                    <tr>
+                        <td class="col-3">Calories: </td><td class="col-6">{{ meal.cal_total_calories | default_if_none:"N/A" }}</td>
+                    </tr>
+                    <tr>
+                        <td class="col-3">Multiplier: </td><td class="col-6">{{ meal.multiplier | default_if_none:"N/A" }}</td>
+                    </tr>
+                    <tr>
+                        <td class="col-3"></td>
+                        <td class="col-3" colspan="2"><a href="{{ meal.get_absolute_url }}">Click here to edit the record.</a></td>
+                    </tr>
+                    <tr><td><br></td><td></td></tr>
+                    {% comment %} <td>{{ object.mealTime }}</td> {% endcomment %}
+                    {% empty %}
+                    <tr>
+                        <td>No object found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-3">
+            <div></div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md">
+            {% if is_paginated %}
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                {% if page_obj.has_previous %}
+                    <li class="page-item"><a href="?page={{ page_obj.previous_page_number }}" class="page-link">&laquo;</a></li>
+                {% else %}
+                    <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
+                {% endif %}
+                {% for i in paginator.page_range %}
+                    {% if page_obj.number == i %}
+                    <li class="page-item active"><span class="page-link">{{ i }} <span class="sr-only">(current)</span></span></li>
+                    {% else %}
+                    <li class="page-item"><a href="?page={{ i }}" class="page-link">{{ i }}</a></li>
+                    {% endif %}
+                {% endfor %}
+                {% if page_obj.has_next %}
+                    <li class="page-item"><a href="?page={{ page_obj.next_page_number }}" class="page-link">&raquo;</a></li>
+                {% else %}
+                    <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
+                {% endif %}
+                </ul>
+            </nav>
+            {% else %}
+            <div> Not paginated. </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

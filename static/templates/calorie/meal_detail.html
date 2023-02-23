@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div>Meal Detail Here.</div>
+<div>{{ testContext }}</div>
+
+<div id="meal-detail" class="not-visible"></div>
+<div id="food-detail-foodType" class="not-visible">{{ meal.food.foodType }}</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md">
+            <div id="alert-box"></div>
+            <form class="mt-5" id="meal-detail-form">
+                {% csrf_token %}
+                <div class="form-header">Meal ID:</div>
+                <div class="form-header" id="meal-detail-pk">{{ meal.pk }}</div>
+                <br />
+                <div class="form-header">Meal Name:</div>
+                <div class="form-header" id="meal-detail-food-name">{{ meal.food.name }}</div>
+                <br />
+                <div class="form-header">Date</div>
+                <div class="ui calendar" id="meal-detail-form-date">
+                    <div class="ui input left icon">
+                    <i class="calendar icon"></i>
+                    <input type="text" id="meal-detail-form-date-value" placeholder="Date" value="{{ meal.date }}">
+                    </div>
+                </div>
+                <div><br /></div>
+                <div class="form-header">Date / Time</div>
+                <div class="ui calendar" id="meal-detail-form-datetime">
+                    <div class="ui input left icon">
+                        <i class="calendar icon"></i>
+                        <input type="text" id="meal-detail-form-datetime-value" placeholder="Date/Time" value="{{ meal.datetimeNullable }}">
+                    </div>
+                </div>
+                <div><br /></div>
+                <div class="not-visible" id="sel_meal_time">{{ meal.mealTime }}</div>
+                <div class="form-header">Meal Time</div>
+                <div class="ui selection dropdown" id="mealTimes-detail">
+                    <input type="hidden" name="mealTime-detail" id="mealTime-input">
+                    <i class="dropdown icon"></i>
+                    <div class="default text" id="mealTime-detail-text">Meal Time</div>
+                    <div class="menu" id="mealTimes-detail-data-box"></div> <!-- items append here. -->
+                </div>
+                <div><br /></div>
+                <div class="form-header">Mulitplier</div>
+                <div class="ui disabled input" style="width: 200px;" id="multiplier-detail-input">
+                    {% comment %} https://stackoverflow.com/questions/34057595/allow-2-decimal-places-in-input-type-number {% endcomment %}
+                    <input type="text" id="multiplier-detail-text" placeholder="Please enter multiplier" value="{{ meal.multiplier }}" pattern="^\d*(\.\d{0,2})?$">
+                </div>
+                <div><br /></div>
+                <div id="btn-detail-box" class="mt-5">
+                    <button type="submit" class="ui primary button">save</button>
+                </div>
+            </form>
+            {% comment %} <table>
+                <tbody>
+                    <tr>
+                        <td>Primary Key: </td><td>{{ meal.pk }}</td>
+                    </tr>
+                    <tr>
+                        <td>Meal Name: </td><td>{{ meal.food.name }}</td>
+                    </tr>
+                    <tr>
+                        <td>Record Date: </td><td>{{ meal.date }}</td>
+                    </tr>
+                    <tr>
+                        <td>Record Time: </td><td>{{ meal.datetimeNullable | date:"g:i a" }}</td>
+                    </tr>
+                    <tr>
+                        <td>Served Section: </td><td>{{ meal.mealTime }}</td>
+                    </tr>
+                    <tr>
+                        <td>Multipler: </td><td>{{ meal.multiplier }}</td>
+                    </tr>
+                </tbody>
+            </table> {% endcomment %}
+        </div>
+
+        <div class= "col-md">
+            <table class="" id="nutri-table">
+                <tbody>
+                    <tr>
+                        <td class="nutri-heading">name:</td>
+                        <td name="nutri-info" id="nutri-name">{{ meal.food.name }}</td>
+                    </tr>
+                    <tr>
+                        <td class="nutri-heading">manufacturer:</td>
+                        <td name="nutri-info" id="nutri-manufacturer">{{ meal.food.manufacturer }}</td>
+                    </tr>
+                    <tr>
+                        <td class="nutri-heading">Weight Type:</td>
+                        <td name="nutri-info" id="nutri-weightType">{{ meal.food.weightType }}</td>
+                    </tr>
+                    <tr>
+                        <td class="nutri-heading">Weight per meal:</td>
+                        <td name="nutri-info" id="nutri-weightPerMeal">{{ meal.food.weightPerMeal }}</td>
+                    </tr>
+                    <tr>
+                        <td class="nutri-heading">Calories:</td>
+                        <td name="nutri-info" id="nutri-calories">{{ meal.cal_total_calories | default:"0.00" }}</td>
+                    </tr>
+                    <tr>
+                        <td class="nutri-heading">Protein:</td>
+                        <td name="nutri-info" id="nutri-protein">{{ meal.cal_total_protein | default:"0.00" }}</td>
+                    </tr>
+                    <tr>
+                        <td class="nutri-heading">Fat:</td>
+                        <td name="nutri-info" id="nutri-fat">{{ meal.cal_total_fat | default:"0.00" }}</td>
+                    </tr>
+                    <tr>
+                        <td class="nutri-heading">Saturated Fat:</td>
+                        <td name="nutri-info" id="nutri-saturatedFat">{{ meal.cal_total_saturatedFat | default:"0.00" }}</td>
+                    </tr>
+                    <tr>
+                        <td class="nutri-heading">Trans Fat:</td>
+                        <td name="nutri-info" id="nutri-transFat">{{ meal.cal_total_transFat | default:"0.00" }}</td>
+                    </tr>
+                    <tr>
+                        <td class="nutri-heading">Carbohydrates:</td>
+                        <td name="nutri-info" id="nutri-carbohydrates">{{ meal.cal_total_carbohydrates | default:"0.00" }}</td>
+                    </tr>
+                    <tr>
+                        <td class="nutri-heading">Sodium:</td>
+                        <td name="nutri-info" id="nutri-sodium">{{ meal.cal_total_sodium | default:"0.00" }}</td>
+                    </tr>
+                    <tr>
+                        <td class="nutri-heading">VitaminB1:</td>
+                        <td name="nutri-info" id="nutri-vitaminB1">{{ meal.cal_total_vitaminB1 | default:"0.00" }}</td>
+                    </tr>
+                    <tr>
+                        <td class="nutri-heading">VitaminB2:</td>
+                        <td name="nutri-info" id="nutri-vitaminB2">{{ meal.cal_total_vitaminB2 | default:"0.00" }}</td>
+                    </tr>
+                    <tr>
+                        <td class="nutri-heading">VitaminB3:</td>
+                        <td name="nutri-info" id="nutri-vitaminB3">{{ meal.cal_total_vitaminB2 | default:"0.00" }}</td>
+                    </tr>
+                    {% comment %} <tr>
+                        <td class="nutri-heading">Dietary Fibre:</td>
+                        <td name="nutri-info" id="nutri-dietaryFibre">{{ meal.food. }}</td>
+                    </tr> {% endcomment %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div>{{ meal }}</div>
+
+{% endblock content %}

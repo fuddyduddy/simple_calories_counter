@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div>Add Meal Here.</div>
+<div>{{ testContext }}</div>
+
+<div id="alert-box"></div>
+<form class="mt-5" id="meal-form">
+    {% csrf_token %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md">
+                <div class="form-header">Food Types</div>
+                <div class="ui selection dropdown" id="foodTypes">
+                    <input type="hidden" name="foodType">
+                    <i class="dropdown icon"></i>
+                    <div class="default text" id="foodType-text">Choose a food type</div>
+                    <div class="menu" id="foodTypes-data-box"></div> <!-- items append here. -->
+                </div>
+                <div><br /></div>
+                <div class="form-header">Food</div>
+                <div class="ui selection dropdown" id="foods">
+                    <input type="hidden" name="food">
+                    <i class="dropdown icon"></i>
+                    <div class="default text" id="food-text">Choose a food</div>
+                    <div class="menu" id="foods-data-box"></div> <!-- items append here. -->
+                </div>
+                <div><br /></div>
+                <div class="form-header">Date</div>
+                <div class="ui calendar" id="meal-form-date">
+                    <div class="ui input left icon">
+                    <i class="calendar icon"></i>
+                    <input type="text" id="meal-form-date-value" placeholder="Date">
+                    </div>
+                </div>
+                <div><br /></div>
+                <div class="form-header">Date / Time</div>
+                <div class="ui calendar" id="meal-form-datetime">
+                    <div class="ui input left icon">
+                        <i class="calendar icon"></i>
+                        <input type="text" id="meal-form-datetime-value" placeholder="Date/Time">
+                    </div>
+                </div>
+                <div><br /></div>
+                <div class="form-header">Meal Time</div>
+                <div class="ui selection disabled dropdown" id="mealTimes">
+                    <input type="hidden" name="mealTime">
+                    <i class="dropdown icon"></i>
+                    <div class="default text" id="mealTime-text">Meal Time</div>
+                    <div class="menu" id="mealTimes-data-box"></div> <!-- items append here. -->
+                </div>
+                <div><br /></div>
+                <div class="form-header">Mulitplier</div>
+                <div class="ui disabled input" style="width: 200px;" id="multiplier-input">
+                    {% comment %} https://stackoverflow.com/questions/34057595/allow-2-decimal-places-in-input-type-number {% endcomment %}
+                    <input type="text" id="multiplier-text" placeholder="Please enter multiplier" value="1.0" pattern="^\d*(\.\d{0,2})?$">
+                </div>
+                <div><br /></div>
+                <div id="btn-box" class="mt-5 not-visible">
+                    <button type="submit" class="ui primary button">save</button>
+                </div>
+            </div>
+            <div class="col-md">
+                <table class="not-visible" id="nutri-table">
+                    <tbody>
+                        <tr>
+                            <td class="nutri-heading">name:</td>
+                            <td name="nutri-info" id="nutri-name">{{ dataNotFound }}</td>
+                        </tr>
+                        <tr>
+                            <td class="nutri-heading">manufacturer:</td>
+                            <td name="nutri-info" id="nutri-manufacturer">{{ dataNotFound }}</td>
+                        </tr>
+                        <tr>
+                            <td class="nutri-heading">Weight Type:</td>
+                            <td name="nutri-info" id="nutri-weightType">{{ dataNotFound }}</td>
+                        </tr>
+                        <tr>
+                            <td class="nutri-heading">Weight per meal:</td>
+                            <td name="nutri-info" id="nutri-weightPerMeal">{{ dataNotFound }}</td>
+                        </tr>
+                        <tr>
+                            <td class="nutri-heading">Calories:</td>
+                            <td name="nutri-info" id="nutri-calories">{{ dataNotFound }}</td>
+                        </tr>
+                        <tr>
+                            <td class="nutri-heading">Protein:</td>
+                            <td name="nutri-info" id="nutri-protein">{{ dataNotFound }}</td>
+                        </tr>
+                        <tr>
+                            <td class="nutri-heading">Fat:</td>
+                            <td name="nutri-info" id="nutri-fat">{{ dataNotFound }}</td>
+                        </tr>
+                        <tr>
+                            <td class="nutri-heading">Saturated Fat:</td>
+                            <td name="nutri-info" id="nutri-saturatedFat">{{ dataNotFound }}</td>
+                        </tr>
+                        <tr>
+                            <td class="nutri-heading">Trans Fat:</td>
+                            <td name="nutri-info" id="nutri-transFat">{{ dataNotFound }}</td>
+                        </tr>
+                        <tr>
+                            <td class="nutri-heading">Carbohydrates:</td>
+                            <td name="nutri-info" id="nutri-carbohydrates">{{ dataNotFound }}</td>
+                        </tr>
+                        <tr>
+                            <td class="nutri-heading">Sodium:</td>
+                            <td name="nutri-info" id="nutri-sodium">{{ dataNotFound }}</td>
+                        </tr>
+                        <tr>
+                            <td class="nutri-heading">VitaminB1:</td>
+                            <td name="nutri-info" id="nutri-vitaminB1">{{ dataNotFound }}</td>
+                        </tr>
+                        <tr>
+                            <td class="nutri-heading">VitaminB2:</td>
+                            <td name="nutri-info" id="nutri-vitaminB2">{{ dataNotFound }}</td>
+                        </tr>
+                        <tr>
+                            <td class="nutri-heading">VitaminB3:</td>
+                            <td name="nutri-info" id="nutri-vitaminB3">{{ dataNotFound }}</td>
+                        </tr>
+                        <tr>
+                            <td class="nutri-heading">Dietary Fibre:</td>
+                            <td name="nutri-info" id="nutri-dietaryFibre">{{ dataNotFound }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</form>
+
+{% endblock content %}

@@ -1,0 +1,74 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <div hidden><!-- (2023-01-10) Not using the latest bootstrap 5.3.0 because reluctant to find jquery supported navbar-toggler solution --></div>
+    <style>
+        .testing {
+            background-color: red;
+        }
+        
+        @media (max-width: 1100px){
+            .testing {
+                background-color: lightblue;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    
+    <!-- Workable js load-in sequence: jQuery, bootstrap, semantic, semantic-calendar module, custom js -->
+
+    <!-- jQuery cdn -->
+    {% comment %} <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.js" integrity="sha512-nO7wgHUoWPYGCNriyGzcFwPSF+bPDOR+NvtOYy2wMcWkrnCNPKBcFEkU80XIN14UVja0Gdnff9EmydyLlOL7mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> {% endcomment %}
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    {% comment %} <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> {% endcomment %}
+    
+    <!-- bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    
+    <!-- semantic js & css cdn -->
+    <link rel="stylesheet" type='text/css' href="https://cdn.jsdelivr.net/npm/semantic-ui@2.5.0/dist/semantic.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.5.0/dist/semantic.min.js"></script>
+    
+    <!-- semantic js calendar module -->
+    <!-- https://github.com/mdehoog/Semantic-UI-Calendar -->
+    <!-- https://stackoverflow.com/questions/33201533/datepicker-in-semantic-ui -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui-calendar/0.0.8/calendar.css" integrity="sha512-FdurG0zTlmHreZv8QaJXnPNJ0ptwcu1AjzTrtzvRzrdKkMSemmBc+pACo77k/WBqJigsuswP22Zhkk7lxPnegQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui-calendar/0.0.8/calendar.min.js" integrity="sha512-PAbeCLn5ujGnnJa8R+Fjg3p6Dl66qXuXmmDcpfqq0uSUGZ+Qv+wogDou7uBna+f7g+F6Bm5T+Q1oSwpjxZJ3Xw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
+    <!-- custom css & js -->
+    <script src="{% static 'main.js' %}" defer></script>
+    <script src="{% static 'semantic.js' %}" defer></script>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    
+    <title>{{ page_title }}</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-xl navbar-light bg-light">
+        <label class="navbar-brand"><a href="/">Calories Counter</a></label>
+        <button class="navbar-toggler ms-auto ms-sm-2" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto align-items-end">
+                <li class="nav-item active px-lg-5 px-sm-3 px-1"><a class="nav-link" id="" href="addFood">Add Food</a></li>
+                <li class="nav-item active px-lg-5 px-sm-3 px-1"><a class="nav-link" id="" href="foodList">Edit/Delete Food</a></li>
+                <li class="nav-item active px-lg-5 px-sm-3 px-1"><a class="nav-link" id="add-meal-href" href="{% url 'addMeal' %}">Add Meal</a></li>
+                {% comment %} <li class="nav-item active px-lg-5 px-sm-3 px-1"><a class="nav-link" id="" href="meal_list">Edit/Delete Meal</a></li> {% endcomment %}
+                <li class="nav-item active px-lg-5 px-sm-3 px-1"><a class="nav-link" id="" href="{% url 'meal_list' %}">Edit/Delete Meal</a></li>
+                <li class="nav-item active px-lg-5 px-sm-3 px-1"><a class="nav-link" id="" href="statistics">My Statistics</a></li>
+                <li class="nav-item active px-lg-5 px-sm-3 px-1"><a class="nav-link" id="" href="authPanel">Login / Sign-Up</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="testing">This is a test.</div>
+    <div>{{ static }}</div>
+    {% block content %}
+    {% endblock %}
+</body>
+</html>

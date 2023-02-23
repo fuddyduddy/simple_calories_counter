@@ -1,4 +1,4 @@
 ### Change Log
 
 ### Memo
-2023-01-23: "AddMeal" change to Class Base View "CreateView" not successful.
+2023-02-23: 1st commit to github.

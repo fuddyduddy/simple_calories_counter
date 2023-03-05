@@ -1,6 +1,10 @@
 console.log("main.js loaded.");
 
-//#region AddMeal - global var
+//#region index page - global var
+const indexPage = document.getElementById('index-page');
+//#endregion
+
+//#region AddMeal view - global var
 const mealForm = document.getElementById('meal-form');
 
 const foodTypesDataBox = document.getElementById('foodTypes-data-box');
@@ -31,11 +35,11 @@ const nutriTable = document.getElementById('nutri-table');
 const nutriInfo = document.getElementsByName('nutri-info');
 //#endregion
 
-//#region meal_list - global var
-const mealListView = document.getElementById('meal-list');
+//#region meal_list view - global var
+const mealListView = document.getElementById('meal-list-view');
 //#endregion
 
-//#region DeleteMeal in detail view - global var
+//#region meal_detail view - global var
 const mealDetailView = document.getElementById('meal-detail');
 const mealTimeDetailInput = document.getElementById('mealTime-input');
 const mealTimeDetailDataBox = document.getElementById('mealTimes-detail-data-box');
@@ -51,15 +55,94 @@ const multiplierDetailText = document.getElementById('multiplier-detail-text');
 // const mealDeleteForm = document.getElementById('delete-meal');
 //#endregion
 
+//#region AddFood view - gloval var
+const addFoodPage = document.getElementById('add-food');
+
+const addFoodForm = document.getElementById('addFood-form');
+
+const addFoodFoodTypesDataBox = document.getElementById('addFood-foodTypes-data-box');
+const addFoodFoodTypesInput = document.getElementById('addFood-foodTypes');
+const addFoodFoodTypeText = document.getElementById('addFood-foodType-text');
+
+const addFoodWTypesDataBox = document.getElementById('addFood-weightTypes-data-box');
+const addFoodWTypesInput = document.getElementById('addFood-weightTypes');
+const addFoodWTypesText = document.getElementById('addFood-weightType-text');
+
+const addFoodNameInput          = document.getElementById('addFood-name-input');
+const addFoodNameTxtF           = document.getElementById('addFood-name-txtField');
+const addFoodManufacturerInput  = document.getElementById('addFood-manufacturer-input');
+const addFoodManufacturerTxtF   = document.getElementById('addFood-manufacturer-txtField');
+const addFoodWPMInput           = document.getElementById('addFood-weightPerMeal-input');
+const addFoodWPMTxtF            = document.getElementById('addFood-weightPerMeal-txtField');
+const addFoodCaloriesInput      = document.getElementById('addFood-calories-input');
+const addFoodCaloriesTxtF       = document.getElementById('addFood-calories-txtField');
+const addFoodProteinInput       = document.getElementById('addFood-protein-input');
+const addFoodProteinTxtF        = document.getElementById('addFood-protein-txtField');
+const addFoodFatInput           = document.getElementById('addFood-fat-input');
+const addFoodFatTxtF            = document.getElementById('addFood-fat-txtField');
+const addFoodSaturatedFatInput  = document.getElementById('addFood-saturatedFat-input');
+const addFoodSaturatedFatTxtF   = document.getElementById('addFood-saturatedFat-txtField');
+const addFoodTransFatInput      = document.getElementById('addFood-transFat-input');
+const addFoodTransFatTxtF       = document.getElementById('addFood-transFat-txtField');
+const addFoodCarbohydratesInput = document.getElementById('addFood-carbohydrates-input');
+const addFoodCarbohydratesTxtF  = document.getElementById('addFood-carbohydrates-txtField');
+const addFoodSodiumInput        = document.getElementById('addFood-sodium-input');
+const addFoodSodiumTxtF         = document.getElementById('addFood-sodium-txtField');
+const addFoodVitaminB1Input     = document.getElementById('addFood-vitaminB1-input');
+const addFoodVitaminB1TxtF      = document.getElementById('addFood-vitaminB1-txtField');
+const addFoodVitaminB2Input     = document.getElementById('addFood-vitaminB2-input');
+const addFoodVitaminB2TxtF      = document.getElementById('addFood-vitaminB2-txtField');
+const addFoodVitaminB3Input     = document.getElementById('addFood-vitaminB3-input');
+const addFoodVitaminB3TxtF      = document.getElementById('addFood-vitaminB3-txtField');
+
+const addFoodAlertBox = document.getElementById("addFood-alert-box");
+//CONTINUE HERE, add all input fields here.
+
+const addFoodBtnBox = document.getElementById('addFood-btn-box');
+const addFoodBtn    = document.getElementById('addFood-submit-btn');
+//#endregion
+
+//#region food_list view- global var
+const foodListView = document.getElementById('food-list-view');
+//#endregion
+
+//#region food_detail view - global var
+const foodDetailView = document.getElementById('food-detail');
+//#endregion
+
 $(document).ready(function () {
+    //#region index page
+    if (indexPage != null) {
+        console.log("You're at index page.");
+
+        /*** The blocks of content will transform and visible at last. ***/
+        // $(document).ready(function() {
+        // $(window).scroll(function() {
+        var introTop = $("#block1").offset().top;
+        var purposeTop = $("#block2").offset().top;
+        var infoTop = $("#block3").offset().top;
+        var scrollTop = $(window).scrollTop(); // + $(window).height();
+
+        // if (scrollTop > introTop) {
+        $("#block1").addClass("block-visible");
+        // }
+        // if (scrollTop > purposeTop) {
+        $("#block2").addClass("block-visible");
+        // }
+        // if (scrollTop > infoTop) {
+        $("#block3").addClass("block-visible");
+        // }
+        // });
+        // });              
+    }
+    //#endregion
+
     //#region AddMeal Form
     if (foodTypesDataBox != null) {
         /*** Get food types ***/
         getFoodTypeToOptions();
-        
         /*** Get meal times ***/
         getMealTimeToOptions();
-
         /*** Get Food from filtered food type ***/
         foodTypeInput.addEventListener('change', e => {
             const selectedFoodType = e.target.value;
@@ -70,7 +153,6 @@ $(document).ready(function () {
     
             getFoodFilteredToOptions(selectedFoodType);
         });
-        
         /*** To limit multiplier input to be only decimal input to 0.00 ***/
         $(document).on('keydown', 'input[pattern]', function(e){
             var input = $(this);
@@ -84,7 +166,6 @@ $(document).ready(function () {
                 }
             }, 1);
         });
-        
         /*** meal form on submit ***/
         mealForm.addEventListener('submit', e=>{
             e.preventDefault();
@@ -106,54 +187,49 @@ $(document).ready(function () {
                 url: 'createMeal',
                 data: mealFormData,
                 success: function(response){
-                    // // console.log(foodTypeText.textContent);
-                    // // console.log(foodText.textContent);
-                    // // console.log('created: ', response.created);
                     // console.log(JSON.stringify(response));
                     // console.log(JSON.parse(response));
                     // console.log(JSON.parse(response)[0].url);
-                    // console.log(mealFormData);
                     const redirect_url = JSON.parse(response)[0].url;
-                    alertBox.innerHTML = `<div class="ui positive message">
-                    <div class="header">
-                    Success
-                    </div>
-                    <p>Your meal has been recorded. Your connection will be redirect in 3 sec.</p>
-                    </div>`;
-                    setTimeout(e=>{
-                        foodTypeInput.classList.add('disabled');
-                        foodInput.classList.add('disabled');
-                        mealTimeInput.classList.add('disabled');
-                        mealFormDate.classList.add('disabled');
-                        mealFormDateTime.classList.add('disabled');
-                        multiplierInput.classList.add('disabled');
-                        btnBox.classList.add('not-visible');
-                    }, 1);
-                    setTimeout( e => {
-                        window.location = redirect_url;
-                    }, 3000);
+                    const result = JSON.parse(response)[0].success;
+                    const error_str = JSON.parse(response)[0].error;
+                    
+                    //#region Add form validation here
+                        // console.log(mealFormData);
+                    //#endregion
+
+                    if (!result){
+                        handleObjCreateError("meal", error_str);
+                    } else {
+                        alertBox.innerHTML = `<div class="ui positive message">
+                        <div class="header">
+                        Success
+                        </div>
+                        <p>Your meal has been recorded.</p>
+                        <p>Your connection will be redirect in 3 sec.</p>
+                        </div>`;
+                        setTimeout(e=>{
+                            foodTypeInput.classList.add('disabled');
+                            foodInput.classList.add('disabled');
+                            mealTimeInput.classList.add('disabled');
+                            mealFormDate.classList.add('disabled');
+                            mealFormDateTime.classList.add('disabled');
+                            multiplierInput.classList.add('disabled');
+                            btnBox.classList.add('not-visible');
+                        }, 1);
+                        setTimeout( e => {
+                            window.location = redirect_url;
+                        }, 3000);
+                    }
                 },
-                error: function(error){
-                    console.log('createMeal Error:\n', error);
+                error: function(e){
                     console.log(mealFormData);
-                    alertBox.innerHTML = `<div class="ui negative message">
-                    <div class="header">
-                    Failed
-                    </div>
-                    <p>Something went wrong.</p>
-                    </div>`
+                    handleObjCreateError("meal", e);
                 }
             })
         });
     } else if (mealListView != null){
-        /*** Button not working... ***/
         console.log("You're at meal_list.html");
-        // mealDeleteForm.addEventListener('submit', e => {
-        //     e.preventDefault();
-        //     console.log('e: ', e);
-        //     console.log("e.target.value: ", e.target.value)
-        //     console.log("e.target.elements[0].value: ", e.target.elements[0].value)
-        // })
     } else if (mealDetailView != null){
         console.log("You're at meal_detail.html");
         const mealPK = document.getElementById('meal-detail-pk').innerText;
@@ -188,14 +264,6 @@ $(document).ready(function () {
             }
         });
 
-        // multiplierInput.addEventListener('keydown', e => {
-        //     setTimeout(function () {
-        //         const currMultipler_val = document.getElementById('multiplier-text').value;
-        //         // console.log(currMultipler_val);
-        //         mapNutriDataToTable(response, selectedFood, currMultipler_val);
-        //     }, 1);
-        // });
-
         mealDetailForm.addEventListener('submit', e =>{
             e.preventDefault();
             // console.log('e:\n', e);
@@ -225,7 +293,6 @@ $(document).ready(function () {
                     <p>Your meal has been edited. Your connection will be redirect in 3 sec.</p>
                     </div>`;
                     setTimeout(e=>{
-                        /* To be continue here. 2023-02-22 16:06 */
                         // mealDetailDate.classList.add('disabled');
                         // mealDetailDateTime.classList.add('disabled');
                         // mealTimeDetailInput.classList.add('disabled');
@@ -249,7 +316,133 @@ $(document).ready(function () {
                 }
             })
         });
-    };
+    } else if (addFoodPage != null){
+        console.log("You're at addFood.html.");
+        /*** Get Food Type ***/
+        getFoodTypeToAddFoodOptions();
+        /*** Get Weight Type ***/
+        getWeightTypeToAddFoodOptions();
+
+        /*** To limit number input to be only decimal input to 0.00 ***/
+        /*** .on( events [, selector ] [, data ], handler ) ***/
+        $(document).on('keydown', 'input[pattern]', function(e){
+            var input = $(this);
+            var oldVal = input.val();
+            var regex = new RegExp(input.attr('pattern'), 'g');
+            
+            setTimeout(function(){
+                var newVal = input.val();
+                if(!regex.test(newVal)){
+                    input.val(oldVal); 
+                }
+            }, 1);
+        });
+
+        /*** Enable the save button ***/
+        var isFoodTypesSelected = false;
+        var isWeightTypesSelected = false;
+        var isFoodNameEmpty = false;
+
+        addFoodFoodTypesInput.addEventListener('change', e => {
+            isFoodTypesSelected = true;
+            enableAddFoodSubmitBtn(isFoodTypesSelected, isWeightTypesSelected, isFoodNameEmpty);
+        });
+        addFoodWTypesInput.addEventListener('change', e => {
+            isWeightTypesSelected = true;
+            enableAddFoodSubmitBtn(isFoodTypesSelected, isWeightTypesSelected, isFoodNameEmpty);
+        });
+        addFoodNameInput.addEventListener('keyup', e => {
+            if (e.target.value != "") {
+                isFoodNameEmpty = true;
+            } else {
+                isFoodNameEmpty = false;
+            }
+            enableAddFoodSubmitBtn(isFoodTypesSelected, isWeightTypesSelected, isFoodNameEmpty);
+            // console.log(addFoodNameInput.value);
+        });
+
+        addFoodForm.addEventListener('submit', e => {
+            e.preventDefault();
+            const foodFormData = {
+                'csrfmiddlewaretoken': csrf[0].value,
+                'FoodType': addFoodFoodTypeText.textContent,
+                'Name': addFoodNameInput.value,
+                'Manufacturer': addFoodManufacturerInput.value,
+                'WeightType': addFoodWTypesText.textContent,
+                'WPM': addFoodWPMInput.value,
+                'Calories': addFoodCaloriesInput.value,
+                'Protein': addFoodProteinInput.value, 
+                'Fat': addFoodFatInput.value, 
+                'SaturatedFat': addFoodSaturatedFatInput.value, 
+                'TransFat': addFoodTransFatInput.value, 
+                'Carbohydrates': addFoodCarbohydratesInput.value, 
+                'Sodium': addFoodSodiumInput.value, 
+                'VitaminB1': addFoodVitaminB1Input.value, 
+                'VitaminB2': addFoodVitaminB2Input.value, 
+                'VitaminB3': addFoodVitaminB3Input.value,
+            }
+
+            /*** ajax call (POST) to add a Food record ***/
+            $.ajax({
+                type: 'POST',
+                url: 'createFood',
+                data: foodFormData,
+                success: function(response){
+                    const redirect_url = JSON.parse(response)[0].url;
+                    const result = JSON.parse(response)[0].success;
+                    const error_str = JSON.parse(response)[0].error;
+                    //console.log(response);
+                    
+                    //#region Add form validation here.
+                        console.log(foodFormData);
+                    //#endregion
+
+                    if (!result) {
+                        handleObjCreateError('food', error_str);
+                    } else {
+                        addFoodAlertBox.innerHTML = `<div class="ui positive message">
+                        <div class="header">
+                        Success
+                        </div>
+                        <p>Your food has been recorded. You can select the food later in your meal.</p>
+                        <p>Your connection will be redirect in 3 sec.</p>
+                        </div>`;
+                        setTimeout(e=>{
+                            addFoodFoodTypesInput.classList.add('disabled');
+                            addFoodNameTxtF.classList.add('disabled');
+                            addFoodManufacturerTxtF.classList.add('disabled');
+                            addFoodWTypesInput.classList.add('disabled');
+                            addFoodWPMTxtF.classList.add('disabled');
+                            addFoodCaloriesTxtF.classList.add('disabled');
+                            addFoodProteinTxtF.classList.add('disabled');
+                            addFoodFatTxtF.classList.add('disabled');
+                            addFoodSaturatedFatTxtF.classList.add('disabled');
+                            addFoodTransFatTxtF.classList.add('disabled');
+                            addFoodCarbohydratesTxtF.classList.add('disabled');
+                            addFoodSodiumTxtF.classList.add('disabled');
+                            addFoodVitaminB1TxtF.classList.add('disabled');
+                            addFoodVitaminB2TxtF.classList.add('disabled');
+                            addFoodVitaminB3TxtF.classList.add('disabled');
+                            addFoodBtnBox.classList.add('not-visible');
+                        }, 1);
+                        setTimeout( e => {
+                            window.location = redirect_url;
+                        }, 3000);
+                    }
+                },
+                error: function(e){
+                    handleObjCreateError('food', e);
+                }
+            })
+        });
+
+    } else if (foodListView != null){
+        console.log("You're at food_list.html");
+    } else if (foodDetailView != null) {
+        console.log("You're at food_detail.html");
+        const foodPK = document.getElementById('food-detail-pk').innerText;
+    }
+    ;
     //#endregion
 });
 
@@ -396,7 +589,6 @@ function getMealTimeToDetail() {
 
 function getMealTimeToOptionsMealDetail() {
     /*** Get MealTime to options in meal_detail.html ***/
-    /* To be continue here. 2023-02-15(Wed) To get Meal object with id=pk, and then get its mealTime. */
     $.ajax({
         type: 'GET',
         url: 'mealTimes-json',
@@ -458,6 +650,91 @@ function mapNutriDataToTable(response, selectedFood, multiplier=1.0) {
         };
     });
 };
+
+function getFoodTypeToAddFoodOptions() {
+    $.ajax({
+        type: 'GET',
+        url: 'foodTypes-json',
+        success: function (response) {
+            // console.log("foodtype response\n", response)
+            addFoodFoodTypesDataBox.innerHTML = "";
+            addFoodWTypesText.textContent = "Choose a food type";
+            addFoodFoodTypeText.classList.add('default');
+            
+            const foodTypesData = response.data;
+            foodTypesData.map(item => {
+                // console.log(item, "\n", item.foodType);
+                const option = document.createElement('div');
+                option.textContent = item.foodType;
+                option.setAttribute('class', 'item');
+                option.setAttribute('data-value', item.foodType);
+                addFoodFoodTypesDataBox.appendChild(option);
+            });
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+}
+
+function getWeightTypeToAddFoodOptions() {
+    $.ajax({
+        type: 'GET',
+        url: 'weightTypes-json',
+        success: function (response) {
+            // console.log("foodtype response\n", response)
+            addFoodWTypesDataBox.innerHTML = "";
+            addFoodWTypesText.textContent = "Choose a weight type";
+            addFoodWTypesText.classList.add('default');
+            
+            const weightTypesData = response.data;
+            weightTypesData.map(item => {
+                // console.log(item, "\n", item.weightType);
+                const option = document.createElement('div');
+                option.textContent = item.weightType;
+                option.setAttribute('class', 'item');
+                option.setAttribute('data-value', item.weightType);
+                addFoodWTypesDataBox.appendChild(option);
+            });
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+}
+
+function enableAddFoodSubmitBtn(isFoodTypesSelected, isWeightTypesSelected, isFoodNameEmpty){
+    if (isFoodTypesSelected && isWeightTypesSelected && isFoodNameEmpty) {
+        console.log('they are all true!!');
+        if (addFoodBtn.classList.contains('disabled')) {
+            addFoodBtn.classList.remove('disabled');
+        }
+    } else {
+        if (!addFoodBtn.classList.contains('disabled')) {
+            addFoodBtn.classList.add('disabled');
+        }
+    }
+    // addFoodBtn
+}
+
+function handleObjCreateError(obj, error){
+    var tempMsgStart = `<div class="ui negative message">
+    <div class="header">
+    Failed
+    </div>
+    <p style="inset:0">Something went wrong. -><b>`;
+    const tempMsgEnd = `</b></p>
+    </div>`
+    if (obj == 'meal'){
+        console.log('createMeal Error:\n', error);
+        const errorBoxMsg = tempMsgStart + error + tempMsgEnd;
+        alertBox.innerHTML = errorBoxMsg;
+    } else if (obj == 'food') {
+        console.log('createFood Error:\n', error);
+        const errorBoxMsg = tempMsgStart + error + tempMsgEnd;
+        addFoodAlertBox.innerHTML = errorBoxMsg;
+    }
+}
 
 function padTo2Digits(num) {
     return num.toString().padStart(2, '0');

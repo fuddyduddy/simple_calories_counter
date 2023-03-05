@@ -33,6 +33,7 @@ def index(request):
 #     return render(request, "calorie/addFood.html", context=context)
 # endregion
 
+# region AddFood (Templateview)
 class AddFood(TemplateView):
     template_name = "calorie/addFood.html"
     ### Changed to Class Based View, need to handle page_title later.
@@ -41,17 +42,111 @@ class AddFood(TemplateView):
         #context['users'] = YourModel.objects.all()
         context["testContext"] = "test success"
         return context
+    
+def get_json_weightType_data(request):
+    """ For ajax get weightType (Model) as arrayList to addFood.html """
+    # print("called view:- (get_json_weightType_data)")
+    try:
+        weightType_val = list(WeightType.objects.values())
+        # print(weightType_val)
+        return JsonResponse({'data': weightType_val, 'status': True})
+    except Exception as e:
+        print(e)
+        return JsonResponse({'data': '', 'status': False})
+    
+def create_food(request):
+    response = [{
+        'url': '/calorie/addFood',
+        'success': False,
+        'error': ''
+    }]
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        try:
+            foodType_str = request.POST.get('FoodType')
+            name_obj = request.POST.get('Name')
+            manufacturer_obj = request.POST.get('Manufacturer')
+            weightType_str = request.POST.get('WeightType')
+            WPM_obj = request.POST.get('WPM')
+            calories_obj = request.POST.get('Calories')
+            protein_obj = request.POST.get('Protein')
+            fat_obj = request.POST.get('Fat')
+            saturatedFat_obj = request.POST.get('SaturatedFat')
+            transFat_obj = request.POST.get('TransFat')
+            carbohydrates_obj = request.POST.get('Carbohydrates')
+            sodium_obj = request.POST.get('Sodium')
+            vitaminB1_obj = request.POST.get('VitaminB1')
+            vitaminB2_obj = request.POST.get('VitaminB2')
+            vitaminB3_obj = request.POST.get('VitaminB3')
+            foodType_obj = FoodType.objects.get(foodType=foodType_str)
+            weightType_obj = WeightType.objects.get(weightType=weightType_str)
+            print(
+                foodType_str, name_obj, manufacturer_obj, weightType_str, WPM_obj, calories_obj, protein_obj, fat_obj, saturatedFat_obj, transFat_obj, carbohydrates_obj, sodium_obj, vitaminB1_obj, vitaminB2_obj, vitaminB3_obj
+            )
+
+            Food.objects.create(
+                foodType = foodType_obj
+                ,name = name_obj
+                ,manufacturer = manufacturer_obj
+                ,weightType = weightType_obj
+                ,weightPerMeal = WPM_obj
+                ,calories = calories_obj
+                ,protein = protein_obj
+                ,fat = fat_obj
+                ,saturatedFat = saturatedFat_obj
+                ,transFat = transFat_obj
+                ,carbohydrates = carbohydrates_obj
+                ,sodium = sodium_obj
+                ,vitaminB1 = vitaminB1_obj
+                ,vitaminB2 = vitaminB2_obj
+                ,vitaminB3 = vitaminB3_obj
+            )
+            response[0]['success'] = True
+            return HttpResponse(json.dumps(response))
+        except Exception as e:
+            response[0]['success'] = False
+            response[0]['error'] = "[Error] create_meal failed: " + str(e)#.replace('"', '\"').replace("'","\'")
+            print(response)
+            print("[Error] create_meal failed: ", e)
+            return HttpResponse(json.dumps(response))
+    else:
+        response[0]['success'] = False
+        response[0]['error'] = "[Error] create_meal ajax error"
+        print("[Error] create_meal ajax error")
+        return HttpResponse(json.dumps(response))
+# endregion
         
-class FoodList(TemplateView):
-    template_name = "calorie/foodList.html"
-    ### Changed to Class Based View, need to handle page_title later.
-    def get_context_data(self,*args, **kwargs):
-        context = super(FoodList, self).get_context_data(*args,**kwargs)
-        #context['users'] = YourModel.objects.all()
-        context["testContext"] = "test success"
-        return context
+# region Food List Page
+class FoodList(ListView):
+    # template_name = "calorie/foodList.html"
+    # ### Changed to Class Based View, need to handle page_title later.
+    # def get_context_data(self,*args, **kwargs):
+    #     context = super(FoodList, self).get_context_data(*args,**kwargs)
+    #     #context['users'] = YourModel.objects.all()
+    #     context["testContext"] = "test success"
+    #     return context
+    model = Food
+    template_name = 'calorie/food_list.html'
+    paginate_by = 10
 
+    def get_queryset(self, *args, **kwargs):
+        qs = super(FoodList, self).get_queryset(*args, **kwargs)
+        qs = qs.order_by("-id")
+        return qs
+    
+def food_delete(request, pk):
+    print(pk)
+    food = Food.objects.get(pk=pk)
+    print(food)
+    if food is not None:
+        food.delete()
+    return redirect('food_list')
+    # return JsonResponse({'test': 'testing'})
+# endregion
 
+# region Food Detail Page
+class FoodDetail(DetailView):
+    model = Food
+# endregion
 
 # region commented class AddMeal(TemplateView)
 # class AddMeal(TemplateView):
@@ -110,7 +205,9 @@ def get_json_mealTime_data(request):
 
 def create_meal(request):
     response = [{
-        'url': '/calorie/addMeal'
+        'url': '/calorie/addMeal',
+        'success': False,
+        'error': ''
     }]
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
         try:
@@ -130,19 +227,24 @@ def create_meal(request):
                 multiplier = multiplier_obj
             )
             # return JsonResponse({'created': True})
-            #print(request.path_info)  # return '/calorie/createMeal'
+            # print(request.path_info)  # return '/calorie/createMeal'
             # return HttpResponseRedirect(redirect_to='addMeal')
             # return HttpResponseRedirect(reverse('addMeal'))
             # return redirect(request.META['HTTP_REFERER'])
             # return redirect('addMeal', {'created': True})
             # return redirect('/calorie/addMeal')
             # return render(request, 'calorie/addMeal.html', {'dataNotFound': data_not_found})
+            response[0]['success'] = True
             return HttpResponse(json.dumps(response))
         except Exception as e:
-            print("[Erorr] create_meal failed: " + e)
+            response[0]['success'] = False
+            print("[Erorr] create_meal failed: ", e)
+            response[0]['error'] = "[Erorr] create_meal failed: " + str(e)
             return HttpResponse(json.dumps(response))
             # return JsonResponse({'created': False}, safe=False)
     else:
+        response[0]['success'] = False
+        response[0]['error'] = "[Error] create_meal ajax error"
         print("[Error] create_meal ajax error")
         return HttpResponse(json.dumps(response))
         # return JsonResponse({'created': False}, safe=False)

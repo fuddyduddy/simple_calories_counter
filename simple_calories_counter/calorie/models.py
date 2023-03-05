@@ -66,6 +66,10 @@ class Food(models.Model):
 
     def __str__(self) -> str:
         return f"{self.foodType} :- {self.name}, Est weight per meal: {self.weightPerMeal} / Calories: {self.calories}"
+    
+    def get_absolute_url(self):
+        """ This is used in food_list.html, for redirect to food_detail for DetailView with the primary key (pk) """
+        return reverse("food_detail", kwargs={"pk": self.pk})
 
 class Meal(models.Model):
     food = models.ForeignKey(Food, on_delete=models.CASCADE)

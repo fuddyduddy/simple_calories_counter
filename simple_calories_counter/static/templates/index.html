@@ -1,5 +1,52 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<div id="index-page" class="not-visible"></div>
 <div>Nothing here yet.</div>
+
+<!-- Blocks -->
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12 block-left" id="block1">
+            <h2>Welcome to Our Online Calories Counter!</h2>
+            <p>Maintaining a healthy diet is crucial for good health and well-being. Tracking the daily calorie intake is an effective way to keep tabs on one's eating habits and ensure that the body is receiving the right amount of nutrients. By recording the nutritional content of the foods consumed, individuals can gain insight into their diet and make informed decisions about what they eat. This information can help people identify unhealthy eating patterns and adjust their diet accordingly. Keeping a food diary is also helpful for individuals with specific medical conditions, such as diabetes or heart disease, as it can help them manage their condition and improve their overall health. Therefore, a tool that allows for easy tracking of daily calories intake and nutritional values can be a valuable asset in maintaining a healthy lifestyle.</p>
+        </div>
+        <div class="col-lg-12 whitespace100"></div>
+        <div class="col-lg-9 offset-md-3 block-right" id="block2">
+            <h3>About Me</h3>
+            <p>As someone who prioritizes maintaining a healthy lifestyle, I understand the importance of keeping track of daily calorie intake. That's why I created this website - to provide a convenient tool for people to easily record their daily calories and nutritional intake. By doing so, individuals can gain insight into their eating habits and make informed decisions about what they consume. My ultimate goal for this website is to share it with others and help them achieve their health goals. In the future, I plan to expand the website's capabilities to support a small-medium sized population of users, ranging from 100 to 1000 people. This will require continuous development and improvement, and I am always open to feedback and suggestions from users. I am dedicated to making this website a valuable asset in the pursuit of a healthier lifestyle and am grateful for any support and feedback I receive along the way.</p>
+        </div>
+        <div class="col-lg-12 whitespace100"></div>
+        <div class="col-lg-12 block-left" id="block3">
+            <h3>Contact Us</h3>
+            <ul>
+                <li>Name: [YOUR NAME]</li>
+                <li>Age: [YOUR AGE]</li>
+                <li>Gender: [YOUR GENDER]</li>
+                <li>GitHub: <a href="[YOUR GITHUB LINK]">[YOUR GITHUB LINK]</a></li>
+                <li>Email: <a href="mailto:[YOUR EMAIL]">[YOUR EMAIL]</a></li>
+                <li>Website: <a href="[YOUR WEBSITE LINK]">[YOUR WEBSITE LINK]</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="col-lg-12 whitespace100"></div>
+
+<!-- Footer -->
+<div class="container">
+    <form>
+        <div class="form-group">
+        <label for="email">Send Us an Email:</label>
+        <input type="email" class="form-control" id="email" placeholder="Enter email">
+        </div>
+        <div class="form-group">
+        <label for="message">Message:</label>
+        <textarea class="form-control" id="message" rows="3"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+
 {% endblock content %}

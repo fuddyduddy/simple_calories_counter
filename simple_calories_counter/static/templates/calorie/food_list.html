@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div>Edit/Delete Meal Here.</div>
+<div>Edit/Delete Food Here.</div>
 <div>{{ testContext }}</div>
 
-<div id="meal-list-view" class="not-visible"></div>
+<div id="food-list" class="not-visible"></div>
 
 <div class="container">
     <div class="row">
@@ -44,12 +44,12 @@
         <div class="col-md-9">
             <table>
                 <tbody>
-                    {% for meal in meal_list %}
+                    {% for food in food_list %}
                     <tr>
-                        <td class="col-3">Meal ID: </td>
-                        <td class="col-6">{{ meal.pk }}</td>
+                        <td class="col-3">Food ID: </td>
+                        <td class="col-6">{{ food.pk }}</td>
                         <td class="col-3" rowspan="7">
-                            <a href="{% url 'meal_delete' meal.pk %}">Delete this record</a>
+                            <a href="{% url 'food_delete' food.pk %}">Delete this record</a>
                             {% comment %} <div id="btn-box" class="mt-5">
                                 <button type="submit" class="ui primary button" value="{{ meal.pk }}">Delete This Record.</button>
                             </div> {% endcomment %}
@@ -57,28 +57,53 @@
                     </tr>
                     <tr>
                         {% comment %} For foreign key, to access their headers, need to go 1 more layer down to foreign key's field like "meal.food.name" {% endcomment %}
-                        <td class="col-3">Meal name: </td><td class="col-6">{{ meal.food.name }}</td>
+                        <td class="col-3">Food type: </td><td class="col-6">{{ food.foodType.foodType }}</td>
                     </tr>
                     <tr>
-                        <td class="col-3">Record Date: </td><td class="col-6">{{ meal.date | default_if_none:"N/A" }}</td>
+                        <td class="col-3">Food name: </td><td class="col-6">{{ food.name }}</td>
                     </tr>
                     <tr>
-                        {% comment %} https://stackoverflow.com/questions/70833524/datetimefield-only-show-time-in-html-template {% endcomment %}
-                        {% comment %} <td>{{ meal.datetimeNullable | date:"H, i, s" }}</td> {% endcomment %}
-                        <td class="col-3">Record Time: </td><td class="col-6">{{ meal.datetimeNullable | date:"g:i a" | default_if_none:"N/A" }}</td>
+                        <td class="col-3">Manufacturer: </td><td class="col-6">{{ food.manufacturer | default_if_none:"N/A" }}</td>
                     </tr>
                     <tr>
-                        <td class="col-3">Served Section: </td><td class="col-6">{{ meal.mealTime | default_if_none:"N/A" }}</td>
+                        <td class="col-3">Weight Type: </td><td class="col-6">{{ food.weightType.weightType }}</td>
                     </tr>
                     <tr>
-                        <td class="col-3">Calories: </td><td class="col-6">{{ meal.cal_total_calories | default_if_none:"N/A" }}</td>
+                        <td class="col-3">Weight Per Meal: </td><td class="col-6">{{ food.weightPerMeal | default_if_none:"N/A" }}</td>
                     </tr>
                     <tr>
-                        <td class="col-3">Multiplier: </td><td class="col-6">{{ meal.multiplier | default_if_none:"N/A" }}</td>
+                        <td class="col-3">Calories: </td><td class="col-6">{{ food.calories | default_if_none:"N/A" }}</td>
+                    </tr>
+                    <tr>
+                        <td class="col-3">Protein: </td><td class="col-6">{{ food.protein | default_if_none:"N/A" }}</td>
+                    </tr>
+                    <tr>
+                        <td class="col-3">Fat: </td><td class="col-6">{{ food.fat | default_if_none:"N/A" }}</td>
+                    </tr>
+                    <tr>
+                        <td class="col-3">Saturated Fat: </td><td class="col-6">{{ food.saturatedFat | default_if_none:"N/A" }}</td>
+                    </tr>
+                    <tr>
+                        <td class="col-3">Trans Fat: </td><td class="col-6">{{ food.transFat | default_if_none:"N/A" }}</td>
+                    </tr>
+                    <tr>
+                        <td class="col-3">Carbohydrates: </td><td class="col-6">{{ food.carbohydrates | default_if_none:"N/A" }}</td>
+                    </tr>
+                    <tr>
+                        <td class="col-3">Sodium: </td><td class="col-6">{{ food.sodium | default_if_none:"N/A" }}</td>
+                    </tr>
+                    <tr>
+                        <td class="col-3">VitaminB1: </td><td class="col-6">{{ food.vitaminB1 | default_if_none:"N/A" }}</td>
+                    </tr>
+                    <tr>
+                        <td class="col-3">VitaminB2: </td><td class="col-6">{{ food.vitaminB2 | default_if_none:"N/A" }}</td>
+                    </tr>
+                    <tr>
+                        <td class="col-3">VitaminB3: </td><td class="col-6">{{ food.vitaminB3 | default_if_none:"N/A" }}</td>
                     </tr>
                     <tr>
                         <td class="col-3"></td>
-                        <td class="col-3" colspan="2"><a href="{{ meal.get_absolute_url }}">Click here to edit the record.</a></td>
+                        <td class="col-3" colspan="2"><a href="{{ food.get_absolute_url }}">Click here to edit the record.</a></td>
                     </tr>
                     <tr><td><br></td><td></td></tr>
                     {% comment %} <td>{{ object.mealTime }}</td> {% endcomment %}

@@ -10,7 +10,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md">
-                <div class="form-header">Food Types</div>
+                <div class="form-header">Food Types <span class="red-font">*</span></div>
                 <div class="ui selection dropdown" id="foodTypes">
                     <input type="hidden" name="foodType">
                     <i class="dropdown icon"></i>
@@ -18,7 +18,7 @@
                     <div class="menu" id="foodTypes-data-box"></div> <!-- items append here. -->
                 </div>
                 <div><br /></div>
-                <div class="form-header">Food</div>
+                <div class="form-header">Food <span class="red-font">*</span></div>
                 <div class="ui selection dropdown" id="foods">
                     <input type="hidden" name="food">
                     <i class="dropdown icon"></i>
@@ -26,11 +26,11 @@
                     <div class="menu" id="foods-data-box"></div> <!-- items append here. -->
                 </div>
                 <div><br /></div>
-                <div class="form-header">Date</div>
+                <div class="form-header">Date <span class="red-font">*</span></div>
                 <div class="ui calendar" id="meal-form-date">
                     <div class="ui input left icon">
                     <i class="calendar icon"></i>
-                    <input type="text" id="meal-form-date-value" placeholder="Date">
+                    <input type="text" id="meal-form-date-value" autocomplete="off" placeholder="Date">
                     </div>
                 </div>
                 <div><br /></div>
@@ -38,7 +38,7 @@
                 <div class="ui calendar" id="meal-form-datetime">
                     <div class="ui input left icon">
                         <i class="calendar icon"></i>
-                        <input type="text" id="meal-form-datetime-value" placeholder="Date/Time">
+                        <input type="text" id="meal-form-datetime-value" autocomplete="off" placeholder="Date/Time">
                     </div>
                 </div>
                 <div><br /></div>
@@ -53,7 +53,7 @@
                 <div class="form-header">Mulitplier</div>
                 <div class="ui disabled input" style="width: 200px;" id="multiplier-input">
                     {% comment %} https://stackoverflow.com/questions/34057595/allow-2-decimal-places-in-input-type-number {% endcomment %}
-                    <input type="text" id="multiplier-text" placeholder="Please enter multiplier" value="1.0" pattern="^\d*(\.\d{0,2})?$">
+                    <input type="text" id="multiplier-text" placeholder="Please enter multiplier" value="1.00" pattern="^\d*(\.\d{0,2})?$">
                 </div>
                 <div><br /></div>
                 <div id="btn-box" class="mt-5 not-visible">

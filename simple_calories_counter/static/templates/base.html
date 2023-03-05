@@ -41,6 +41,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui-calendar/0.0.8/calendar.css" integrity="sha512-FdurG0zTlmHreZv8QaJXnPNJ0ptwcu1AjzTrtzvRzrdKkMSemmBc+pACo77k/WBqJigsuswP22Zhkk7lxPnegQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui-calendar/0.0.8/calendar.min.js" integrity="sha512-PAbeCLn5ujGnnJa8R+Fjg3p6Dl66qXuXmmDcpfqq0uSUGZ+Qv+wogDou7uBna+f7g+F6Bm5T+Q1oSwpjxZJ3Xw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     
+    {% comment %} <!-- popper.min.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script> {% endcomment %}
+
     <!-- custom css & js -->
     <script src="{% static 'main.js' %}" defer></script>
     <script src="{% static 'semantic.js' %}" defer></script>
@@ -56,8 +59,8 @@
         </button>
         <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto align-items-end">
-                <li class="nav-item active px-lg-5 px-sm-3 px-1"><a class="nav-link" id="" href="addFood">Add Food</a></li>
-                <li class="nav-item active px-lg-5 px-sm-3 px-1"><a class="nav-link" id="" href="foodList">Edit/Delete Food</a></li>
+                <li class="nav-item active px-lg-5 px-sm-3 px-1"><a class="nav-link" id="" href="{% url 'addFood' %}">Add Food</a></li>
+                <li class="nav-item active px-lg-5 px-sm-3 px-1"><a class="nav-link" id="" href="{% url 'food_list' %}">Edit/Delete Food</a></li>
                 <li class="nav-item active px-lg-5 px-sm-3 px-1"><a class="nav-link" id="add-meal-href" href="{% url 'addMeal' %}">Add Meal</a></li>
                 {% comment %} <li class="nav-item active px-lg-5 px-sm-3 px-1"><a class="nav-link" id="" href="meal_list">Edit/Delete Meal</a></li> {% endcomment %}
                 <li class="nav-item active px-lg-5 px-sm-3 px-1"><a class="nav-link" id="" href="{% url 'meal_list' %}">Edit/Delete Meal</a></li>

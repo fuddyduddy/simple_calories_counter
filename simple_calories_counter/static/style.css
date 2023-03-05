@@ -1,15 +1,63 @@
 /* General */
 .mt-5 {
-    margin-top: 5px !important;
+  margin-top: 5px !important;
 }
 
+/* .purpose-wrapper {
+  position: relative;
+}
+
+.purpose {
+  position: absolute;
+  top: 50%;
+  left: -50px;
+  width: calc(100% - 50px);
+} */
+
 .not-visible {
-    display: none;
+  display: none;
+}
+
+.block-left {
+  opacity: 0;
+  transform: translateX(-70px);
+  transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+}
+
+.block-right {
+  opacity: 0;
+  transform: translateX(70px);
+  transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+}
+
+.block-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.whitespace100 {
+  padding-bottom: 100px;
+}
+
+.whitespace300 {
+  padding-bottom: 300px;
+}
+
+.whitespace500 {
+  padding-bottom: 500px;
+}
+
+.whitespace1000 {
+  padding-bottom: 1000px;
 }
 
 /* Forms */
 .form-header {
-    font-weight: bold;
+  font-weight: bold;
+}
+
+.red-font {
+  color: red;
 }
 
 /* https://www.w3schools.com/css/tryit.asp?filename=tryresponsive_breakpoints */

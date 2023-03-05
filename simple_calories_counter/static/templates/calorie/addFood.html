@@ -3,4 +3,108 @@
 {% block content %}
 <div>Add Food Here.</div>
 <div>{{ testContext }}</div>
+
+<div id="add-food" class="not-visible"></div>
+
+<div id="addFood-alert-box"></div>
+<form class="mt-5" id="addFood-form">
+    {% csrf_token %}
+    <div class="container">
+        <div class="row">
+            <div class="col-xl">
+                <div class="form-header">Food Types <span class="red-font">*</span></div>
+                <div class="ui selection dropdown" id="addFood-foodTypes">
+                    <input type="hidden" name="addFood-foodType">
+                    <i class="dropdown icon"></i>
+                    <div class="default text" id="addFood-foodType-text">Choose a food type</div>
+                    <div class="menu" id="addFood-foodTypes-data-box"></div> <!-- items append here. -->
+                </div>
+                <div><br /></div>
+                <div class="form-header">Food Name <span class="red-font">*</span></div>
+                <div class="ui input" id="addFood-name-txtField">
+                    <input type="text" id="addFood-name-input" name="addFood-name" placeholder="Please enter food name">
+                </div>
+                <div><br /></div>
+                <div class="form-header">Manufacturer</div>
+                <div class="ui input" id="addFood-manufacturer-txtField">
+                    <input type="text" id="addFood-manufacturer-input" name="addFood-manufacturer" placeholder="Please enter manufacturer">
+                </div>
+                <div><br /></div>
+                {% comment %} <div class="form-header">Weight Type</div>
+                <div class="ui input">
+                    <input type="text" name="addFood-weightType" placeholder="Please enter weight type">
+                  </div>
+                <div><br /></div> {% endcomment %}
+                <div class="form-header">Weight Type <span class="red-font">*</span></div>
+                <div class="ui selection dropdown" id="addFood-weightTypes">
+                    <input type="hidden" name="addFood-weightType">
+                    <i class="dropdown icon"></i>
+                    <div class="default text" id="addFood-weightType-text">Choose a weight type</div>
+                    <div class="menu" id="addFood-weightTypes-data-box"></div> <!-- items append here. -->
+                </div>
+                <div><br /></div>
+                <div class="form-header">Weight Per Meal</div>
+                <div class="ui input" id="addFood-weightPerMeal-txtField">
+                    <input type="text" id="addFood-weightPerMeal-input" name="addFood-weightPerMeal" placeholder="Please enter weight per meal" value="0.00" pattern="^\d*(\.\d{0,2})?$">
+                </div>
+                <div><br /></div>
+                <div class="form-header">Calories (g)</div>
+                <div class="ui input" id="addFood-calories-txtField">
+                    <input type="text" id="addFood-calories-input" name="addFood-calories" placeholder="Please enter calories" value="0.00" pattern="^\d*(\.\d{0,2})?$">
+                </div>
+                <div><br /></div>
+                <div class="form-header">Protein (g)</div>
+                <div class="ui input" id="addFood-protein-txtField">
+                    <input type="text" id="addFood-protein-input" name="addFood-protein" placeholder="Please enter protein" value="0.00" pattern="^\d*(\.\d{0,2})?$">
+                </div>
+                <div><br /></div>
+                <div class="form-header">Fat (g)</div>
+                <div class="ui input" id="addFood-fat-txtField">
+                    <input type="text" id="addFood-fat-input" name="addFood-fat" placeholder="Please enter fat" value="0.00" pattern="^\d*(\.\d{0,2})?$">
+                </div>
+                <div><br /></div>
+                <div class="form-header">Saturated Fat (g)</div>
+                <div class="ui input" id="addFood-saturatedFat-txtField">
+                    <input type="text" id="addFood-saturatedFat-input" name="addFood-saturatedFat" placeholder="Please enter saturated fat" value="0.00" pattern="^\d*(\.\d{0,2})?$">
+                </div>
+                <div><br /></div>
+                <div class="form-header">Trans Fat (g)</div>
+                <div class="ui input" id="addFood-transFat-txtField">
+                    <input type="text" id="addFood-transFat-input" name="addFood-transFat" placeholder="Please enter trans fat" value="0.00" pattern="^\d*(\.\d{0,2})?$">
+                </div>
+                <div><br /></div>
+                <div class="form-header">Carbohydrates (g)</div>
+                <div class="ui input" id="addFood-carbohydrates-txtField">
+                    <input type="text" id="addFood-carbohydrates-input" name="addFood-carbohydrates" placeholder="Please enter carbohydrates" value="0.00" pattern="^\d*(\.\d{0,2})?$">
+                </div>
+                <div><br /></div>
+                <div class="form-header">Sodium (g)</div>
+                <div class="ui input" id="addFood-sodium-txtField">
+                    <input type="text" id="addFood-sodium-input" name="addFood-sodium" placeholder="Please enter sodium" value="0.00" pattern="^\d*(\.\d{0,2})?$">
+                </div>
+                <div><br /></div>
+                <div class="form-header">VitaminB1 (g)</div>
+                <div class="ui input" id="addFood-vitaminB1-txtField">
+                    <input type="text" id="addFood-vitaminB1-input" name="addFood-vitaminB1" placeholder="Please enter vitaminB1" value="0.00" pattern="^\d*(\.\d{0,2})?$">
+                </div>
+                <div><br /></div>
+                <div class="form-header">VitaminB2 (g)</div>
+                <div class="ui input" id="addFood-vitaminB2-txtField">
+                    <input type="text" id="addFood-vitaminB2-input" name="addFood-vitaminB2" placeholder="Please enter vitaminB2" value="0.00" pattern="^\d*(\.\d{0,2})?$">
+                </div>
+                <div><br /></div>
+                <div class="form-header">VitaminB3 (g)</div>
+                <div class="ui input" id="addFood-vitaminB3-txtField">
+                    <input type="text" id="addFood-vitaminB3-input" name="addFood-vitaminB3" placeholder="Please enter vitaminB3" value="0.00" pattern="^\d*(\.\d{0,2})?$">
+                </div>
+                <div><br /></div>
+                <div id="addFood-btn-box" class="mt-5">
+                    <button type="submit" id="addFood-submit-btn" class="ui primary button disabled">save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container whitespace100"> </div>
+</form>
+
 {% endblock content %}

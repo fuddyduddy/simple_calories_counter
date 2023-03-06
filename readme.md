@@ -35,3 +35,13 @@
 2023-02-23: 1st commit to github.<br>
 2023-03-02: readme update.<br>
 2023-03-05: Add Food Page & Food List Page updated.<br>
+2023-03-06: readme & photo update.<br>
+<br>
+
+### Screen Captures
+<hr />
+
+<!-- ![image info](./photo/20230306_sc001.png) -->
+<img src="./photo/20230306_sc001.png" style="width:70%; height:70%">
+<img src="./photo/20230306_sc002.png" style="width:70%; height:70%">
+<img src="./photo/20230306_sc003.png" style="width:70%; height:70%">

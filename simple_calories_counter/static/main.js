@@ -1,113 +1,157 @@
 console.log("main.js loaded.");
 
-//#region index page - global var
-const indexPage = document.getElementById('index-page');
-//#endregion
+/*** EveryTime Memo: The food detail fetch object with pk successful. Now need to do the main.js to POST and view.py to accept the POST ***/
 
-//#region AddMeal view - global var
-const mealForm = document.getElementById('meal-form');
+//#region Global Var Section
+    //#region index page - global var
+    const indexPage = document.getElementById('index-page');
+    //#endregion
 
-const foodTypesDataBox = document.getElementById('foodTypes-data-box');
-const foodTypeInput = document.getElementById('foodTypes');
+    //#region AddMeal view - global var
+    const mealForm = document.getElementById('meal-form');
 
-const mealTimesDataBox = document.getElementById('mealTimes-data-box');
-const mealTimeInput = document.getElementById('mealTimes');
+    const foodTypesDataBox = document.getElementById('foodTypes-data-box');
+    const foodTypeInput = document.getElementById('foodTypes');
 
-const foodDataBox = document.getElementById('foods-data-box');
-const foodInput = document.getElementById('foods');
+    const mealTimesDataBox = document.getElementById('mealTimes-data-box');
+    const mealTimeInput = document.getElementById('mealTimes');
 
-const mealFormDate = document.getElementById('meal-form-date');
-const mealFormDateTime = document.getElementById('meal-form-datetime');
- 
-const foodTypeText = document.getElementById('foodType-text');
-const foodText = document.getElementById('food-text'); 
-const mealDate = document.getElementById('meal-form-date-value');
-const mealDateTime = document.getElementById('meal-form-datetime-value');
-const mealTimeText = document.getElementById('mealTime-text');
-const multiplierText = document.getElementById('multiplier-text');
+    const foodDataBox = document.getElementById('foods-data-box');
+    const foodInput = document.getElementById('foods');
 
-const csrf = document.getElementsByName('csrfmiddlewaretoken'); 
+    const mealFormDate = document.getElementById('meal-form-date');
+    const mealFormDateTime = document.getElementById('meal-form-datetime');
+    
+    const foodTypeText = document.getElementById('foodType-text');
+    const foodText = document.getElementById('food-text'); 
+    const mealDate = document.getElementById('meal-form-date-value');
+    const mealDateTime = document.getElementById('meal-form-datetime-value');
+    const mealTimeText = document.getElementById('mealTime-text');
+    const multiplierText = document.getElementById('multiplier-text');
 
-const multiplierInput = document.getElementById('multiplier-input');
-const btnBox = document.getElementById("btn-box");
-const alertBox = document.getElementById("alert-box");
-const nutriTable = document.getElementById('nutri-table');
-const nutriInfo = document.getElementsByName('nutri-info');
-//#endregion
+    const csrf = document.getElementsByName('csrfmiddlewaretoken'); 
 
-//#region meal_list view - global var
-const mealListView = document.getElementById('meal-list-view');
-//#endregion
+    const multiplierInput = document.getElementById('multiplier-input');
+    const btnBox = document.getElementById("btn-box");
+    const alertBox = document.getElementById("alert-box");
+    const nutriTable = document.getElementById('nutri-table');
+    const nutriInfo = document.getElementsByName('nutri-info');
+    //#endregion
 
-//#region meal_detail view - global var
-const mealDetailView = document.getElementById('meal-detail');
-const mealTimeDetailInput = document.getElementById('mealTime-input');
-const mealTimeDetailDataBox = document.getElementById('mealTimes-detail-data-box');
-const mealTimeDetailText = document.getElementById('mealTime-detail-text');
-const multiplierDetailInput = document.getElementById('multiplier-detail-input');
+    //#region meal_list view - global var
+    const mealListView = document.getElementById('meal-list-view');
+    //#endregion
 
-const mealDetailForm = document.getElementById('meal-detail-form');
-const btnDetailBox = document.getElementById("btn-detail-box");
+    //#region meal_detail view - global var
+    const mealDetailView = document.getElementById('meal-detail');
+    const mealTimeDetailInput = document.getElementById('mealTime-input');
+    const mealTimeDetailDataBox = document.getElementById('mealTimes-detail-data-box');
+    const mealTimeDetailText = document.getElementById('mealTime-detail-text');
+    const multiplierDetailInput = document.getElementById('multiplier-detail-input');
 
-const mealDetailDate = document.getElementById('meal-detail-form-date-value');
-const mealDetailDateTime = document.getElementById('meal-detail-form-datetime-value');
-const multiplierDetailText = document.getElementById('multiplier-detail-text');
-// const mealDeleteForm = document.getElementById('delete-meal');
-//#endregion
+    const mealDetailForm = document.getElementById('meal-detail-form');
+    const btnDetailBox = document.getElementById("btn-detail-box");
 
-//#region AddFood view - gloval var
-const addFoodPage = document.getElementById('add-food');
+    const mealDetailDate = document.getElementById('meal-detail-form-date-value');
+    const mealDetailDateTime = document.getElementById('meal-detail-form-datetime-value');
+    const multiplierDetailText = document.getElementById('multiplier-detail-text');
+    // const mealDeleteForm = document.getElementById('delete-meal');
+    //#endregion
 
-const addFoodForm = document.getElementById('addFood-form');
+    //#region AddFood view - gloval var
+    const addFoodPage = document.getElementById('add-food');
 
-const addFoodFoodTypesDataBox = document.getElementById('addFood-foodTypes-data-box');
-const addFoodFoodTypesInput = document.getElementById('addFood-foodTypes');
-const addFoodFoodTypeText = document.getElementById('addFood-foodType-text');
+    const addFoodForm = document.getElementById('addFood-form');
 
-const addFoodWTypesDataBox = document.getElementById('addFood-weightTypes-data-box');
-const addFoodWTypesInput = document.getElementById('addFood-weightTypes');
-const addFoodWTypesText = document.getElementById('addFood-weightType-text');
+    const addFoodFoodTypesDataBox = document.getElementById('addFood-foodTypes-data-box');
+    const addFoodFoodTypesInput = document.getElementById('addFood-foodTypes');
+    const addFoodFoodTypeText = document.getElementById('addFood-foodType-text');
 
-const addFoodNameInput          = document.getElementById('addFood-name-input');
-const addFoodNameTxtF           = document.getElementById('addFood-name-txtField');
-const addFoodManufacturerInput  = document.getElementById('addFood-manufacturer-input');
-const addFoodManufacturerTxtF   = document.getElementById('addFood-manufacturer-txtField');
-const addFoodWPMInput           = document.getElementById('addFood-weightPerMeal-input');
-const addFoodWPMTxtF            = document.getElementById('addFood-weightPerMeal-txtField');
-const addFoodCaloriesInput      = document.getElementById('addFood-calories-input');
-const addFoodCaloriesTxtF       = document.getElementById('addFood-calories-txtField');
-const addFoodProteinInput       = document.getElementById('addFood-protein-input');
-const addFoodProteinTxtF        = document.getElementById('addFood-protein-txtField');
-const addFoodFatInput           = document.getElementById('addFood-fat-input');
-const addFoodFatTxtF            = document.getElementById('addFood-fat-txtField');
-const addFoodSaturatedFatInput  = document.getElementById('addFood-saturatedFat-input');
-const addFoodSaturatedFatTxtF   = document.getElementById('addFood-saturatedFat-txtField');
-const addFoodTransFatInput      = document.getElementById('addFood-transFat-input');
-const addFoodTransFatTxtF       = document.getElementById('addFood-transFat-txtField');
-const addFoodCarbohydratesInput = document.getElementById('addFood-carbohydrates-input');
-const addFoodCarbohydratesTxtF  = document.getElementById('addFood-carbohydrates-txtField');
-const addFoodSodiumInput        = document.getElementById('addFood-sodium-input');
-const addFoodSodiumTxtF         = document.getElementById('addFood-sodium-txtField');
-const addFoodVitaminB1Input     = document.getElementById('addFood-vitaminB1-input');
-const addFoodVitaminB1TxtF      = document.getElementById('addFood-vitaminB1-txtField');
-const addFoodVitaminB2Input     = document.getElementById('addFood-vitaminB2-input');
-const addFoodVitaminB2TxtF      = document.getElementById('addFood-vitaminB2-txtField');
-const addFoodVitaminB3Input     = document.getElementById('addFood-vitaminB3-input');
-const addFoodVitaminB3TxtF      = document.getElementById('addFood-vitaminB3-txtField');
+    const addFoodWTypesDataBox = document.getElementById('addFood-weightTypes-data-box');
+    const addFoodWTypesInput = document.getElementById('addFood-weightTypes');
+    const addFoodWTypesText = document.getElementById('addFood-weightType-text');
 
-const addFoodAlertBox = document.getElementById("addFood-alert-box");
-//CONTINUE HERE, add all input fields here.
+    const addFoodNameInput          = document.getElementById('addFood-name-input');
+    const addFoodNameTxtF           = document.getElementById('addFood-name-txtField');
+    const addFoodManufacturerInput  = document.getElementById('addFood-manufacturer-input');
+    const addFoodManufacturerTxtF   = document.getElementById('addFood-manufacturer-txtField');
+    const addFoodWPMInput           = document.getElementById('addFood-weightPerMeal-input');
+    const addFoodWPMTxtF            = document.getElementById('addFood-weightPerMeal-txtField');
+    const addFoodCaloriesInput      = document.getElementById('addFood-calories-input');
+    const addFoodCaloriesTxtF       = document.getElementById('addFood-calories-txtField');
+    const addFoodProteinInput       = document.getElementById('addFood-protein-input');
+    const addFoodProteinTxtF        = document.getElementById('addFood-protein-txtField');
+    const addFoodFatInput           = document.getElementById('addFood-fat-input');
+    const addFoodFatTxtF            = document.getElementById('addFood-fat-txtField');
+    const addFoodSaturatedFatInput  = document.getElementById('addFood-saturatedFat-input');
+    const addFoodSaturatedFatTxtF   = document.getElementById('addFood-saturatedFat-txtField');
+    const addFoodTransFatInput      = document.getElementById('addFood-transFat-input');
+    const addFoodTransFatTxtF       = document.getElementById('addFood-transFat-txtField');
+    const addFoodCarbohydratesInput = document.getElementById('addFood-carbohydrates-input');
+    const addFoodCarbohydratesTxtF  = document.getElementById('addFood-carbohydrates-txtField');
+    const addFoodSodiumInput        = document.getElementById('addFood-sodium-input');
+    const addFoodSodiumTxtF         = document.getElementById('addFood-sodium-txtField');
+    const addFoodVitaminB1Input     = document.getElementById('addFood-vitaminB1-input');
+    const addFoodVitaminB1TxtF      = document.getElementById('addFood-vitaminB1-txtField');
+    const addFoodVitaminB2Input     = document.getElementById('addFood-vitaminB2-input');
+    const addFoodVitaminB2TxtF      = document.getElementById('addFood-vitaminB2-txtField');
+    const addFoodVitaminB3Input     = document.getElementById('addFood-vitaminB3-input');
+    const addFoodVitaminB3TxtF      = document.getElementById('addFood-vitaminB3-txtField');
 
-const addFoodBtnBox = document.getElementById('addFood-btn-box');
-const addFoodBtn    = document.getElementById('addFood-submit-btn');
-//#endregion
+    const addFoodAlertBox = document.getElementById("addFood-alert-box");
+    //CONTINUE HERE, add all input fields here.
 
-//#region food_list view- global var
-const foodListView = document.getElementById('food-list-view');
-//#endregion
+    const addFoodBtnBox = document.getElementById('addFood-btn-box');
+    const addFoodBtn    = document.getElementById('addFood-submit-btn');
+    //#endregion
 
-//#region food_detail view - global var
-const foodDetailView = document.getElementById('food-detail');
+    //#region food_list view- global var
+    const foodListView = document.getElementById('food-list-view');
+    //#endregion
+
+    //#region food_detail view - global var
+    const foodDetailView = document.getElementById('food-detail');
+    const foodDetailFoodTypesDataBox = document.getElementById('food-detail-foodTypes-data-box');
+    const foodDetailFoodTypesInput = document.getElementById('food-detail-foodTypes-dropdown');
+    const foodDetailFoodTypeText = document.getElementById('food-detail-foodType-text');
+
+    const foodDetailWTypesDataBox = document.getElementById('food-detail-weightTypes-data-box');
+    const foodDetailWTypesInput = document.getElementById('food-detail-weightTypes-dropdown');
+    const foodDetailWTypesText = document.getElementById('food-detail-weightType-text');
+
+    const foodDetailNameInput          = document.getElementById('food-detail-name-input');
+    const foodDetailNameTxtF           = document.getElementById('food-detail-name-txtField');
+    const foodDetailManufacturerInput  = document.getElementById('food-detail-manufacturer-input');
+    const foodDetailManufacturerTxtF   = document.getElementById('food-detail-manufacturer-txtField');
+    const foodDetailWPMInput           = document.getElementById('food-detail-weightPerMeal-input');
+    const foodDetailWPMTxtF            = document.getElementById('food-detail-weightPerMeal-txtField');
+    const foodDetailCaloriesInput      = document.getElementById('food-detail-calories-input');
+    const foodDetailCaloriesTxtF       = document.getElementById('food-detail-calories-txtField');
+    const foodDetailProteinInput       = document.getElementById('food-detail-protein-input');
+    const foodDetailProteinTxtF        = document.getElementById('food-detail-protein-txtField');
+    const foodDetailFatInput           = document.getElementById('food-detail-fat-input');
+    const foodDetailFatTxtF            = document.getElementById('food-detail-fat-txtField');
+    const foodDetailSaturatedFatInput  = document.getElementById('food-detail-saturatedFat-input');
+    const foodDetailSaturatedFatTxtF   = document.getElementById('food-detail-saturatedFat-txtField');
+    const foodDetailTransFatInput      = document.getElementById('food-detail-transFat-input');
+    const foodDetailTransFatTxtF       = document.getElementById('food-detail-transFat-txtField');
+    const foodDetailCarbohydratesInput = document.getElementById('food-detail-carbohydrates-input');
+    const foodDetailCarbohydratesTxtF  = document.getElementById('food-detail-carbohydrates-txtField');
+    const foodDetailSodiumInput        = document.getElementById('food-detail-sodium-input');
+    const foodDetailSodiumTxtF         = document.getElementById('food-detail-sodium-txtField');
+    const foodDetailVitaminB1Input     = document.getElementById('food-detail-vitaminB1-input');
+    const foodDetailVitaminB1TxtF      = document.getElementById('food-detail-vitaminB1-txtField');
+    const foodDetailVitaminB2Input     = document.getElementById('food-detail-vitaminB2-input');
+    const foodDetailVitaminB2TxtF      = document.getElementById('food-detail-vitaminB2-txtField');
+    const foodDetailVitaminB3Input     = document.getElementById('food-detail-vitaminB3-input');
+    const foodDetailVitaminB3TxtF      = document.getElementById('food-detail-vitaminB3-txtField');
+
+    const foodDetailAlertBox = document.getElementById("food-detail-alert-box");
+    //CONTINUE HERE, add all input fields here.
+
+    const foodDetailBtnBox = document.getElementById('food-detail-btn-box');
+    const foodDetailBtn    = document.getElementById('food-detail-submit-btn');
+    //#endregion
 //#endregion
 
 $(document).ready(function () {
@@ -441,11 +485,92 @@ $(document).ready(function () {
     } else if (foodDetailView != null) {
         console.log("You're at food_detail.html");
         const foodPK = document.getElementById('food-detail-pk').innerText;
+        
+        foodDetailFoodTypesInput
+        getFoodTypeToFoodDetailOptions()
+        getWeightTypeToFoodDetailOptions()
+
+        /* POST to save the edited food detail to model. */
+        // addFoodForm.addEventListener('submit', e => {
+        //     e.preventDefault();
+        //     const foodFormData = {
+        //         'csrfmiddlewaretoken': csrf[0].value,
+        //         'FoodType': addFoodFoodTypeText.textContent,
+        //         'Name': addFoodNameInput.value,
+        //         'Manufacturer': addFoodManufacturerInput.value,
+        //         'WeightType': addFoodWTypesText.textContent,
+        //         'WPM': addFoodWPMInput.value,
+        //         'Calories': addFoodCaloriesInput.value,
+        //         'Protein': addFoodProteinInput.value, 
+        //         'Fat': addFoodFatInput.value, 
+        //         'SaturatedFat': addFoodSaturatedFatInput.value, 
+        //         'TransFat': addFoodTransFatInput.value, 
+        //         'Carbohydrates': addFoodCarbohydratesInput.value, 
+        //         'Sodium': addFoodSodiumInput.value, 
+        //         'VitaminB1': addFoodVitaminB1Input.value, 
+        //         'VitaminB2': addFoodVitaminB2Input.value, 
+        //         'VitaminB3': addFoodVitaminB3Input.value,
+        //     }
+
+        //     /*** ajax call (POST) to add a Food record ***/
+        //     $.ajax({
+        //         type: 'POST',
+        //         url: 'createFood',
+        //         data: foodFormData,
+        //         success: function(response){
+        //             const redirect_url = JSON.parse(response)[0].url;
+        //             const result = JSON.parse(response)[0].success;
+        //             const error_str = JSON.parse(response)[0].error;
+        //             //console.log(response);
+                    
+        //             //#region Add form validation here.
+        //                 console.log(foodFormData);
+        //             //#endregion
+
+        //             if (!result) {
+        //                 handleObjCreateError('food', error_str);
+        //             } else {
+        //                 addFoodAlertBox.innerHTML = `<div class="ui positive message">
+        //                 <div class="header">
+        //                 Success
+        //                 </div>
+        //                 <p>Your food has been recorded. You can select the food later in your meal.</p>
+        //                 <p>Your connection will be redirect in 3 sec.</p>
+        //                 </div>`;
+        //                 setTimeout(e=>{
+        //                     addFoodFoodTypesInput.classList.add('disabled');
+        //                     addFoodNameTxtF.classList.add('disabled');
+        //                     addFoodManufacturerTxtF.classList.add('disabled');
+        //                     addFoodWTypesInput.classList.add('disabled');
+        //                     addFoodWPMTxtF.classList.add('disabled');
+        //                     addFoodCaloriesTxtF.classList.add('disabled');
+        //                     addFoodProteinTxtF.classList.add('disabled');
+        //                     addFoodFatTxtF.classList.add('disabled');
+        //                     addFoodSaturatedFatTxtF.classList.add('disabled');
+        //                     addFoodTransFatTxtF.classList.add('disabled');
+        //                     addFoodCarbohydratesTxtF.classList.add('disabled');
+        //                     addFoodSodiumTxtF.classList.add('disabled');
+        //                     addFoodVitaminB1TxtF.classList.add('disabled');
+        //                     addFoodVitaminB2TxtF.classList.add('disabled');
+        //                     addFoodVitaminB3TxtF.classList.add('disabled');
+        //                     addFoodBtnBox.classList.add('not-visible');
+        //                 }, 1);
+        //                 setTimeout( e => {
+        //                     window.location = redirect_url;
+        //                 }, 3000);
+        //             }
+        //         },
+        //         error: function(e){
+        //             handleObjCreateError('food', e);
+        //         }
+        //     })
+        // });
     }
     ;
     //#endregion
 });
 
+//#region Functions Section
 function getFoodFilteredToOptions(selectedFoodType) {
     $.ajax({
         type: 'GET',
@@ -616,6 +741,7 @@ function getMealTimeToOptionsMealDetail() {
 }
 
 function mapNutriDataToTable(response, selectedFood, multiplier=1.0) {
+    /* map Nutrition data to side-table */
     // console.log(multiplier);
     response.data.map( item => {
         if (item.name == selectedFood) {
@@ -717,6 +843,75 @@ function enableAddFoodSubmitBtn(isFoodTypesSelected, isWeightTypesSelected, isFo
     // addFoodBtn
 }
 
+function getFoodTypeToFoodDetailOptions() {
+    $.ajax({
+        type: 'GET',
+        url: '../foodTypes-json',
+        success: function (response) {
+            // console.log("foodtype response\n", response)
+            const selectedFoodType = document.getElementById("sel-food-detail-food-type").innerHTML;
+            
+            foodDetailFoodTypesDataBox.innerHTML = "";
+            foodDetailFoodTypeText.textContent = "Choose a food type";
+            foodDetailFoodTypeText.classList.add('default');
+            
+            const foodTypesData = response.data;
+            foodTypesData.map(item => {
+                // console.log(item, "\n", item.foodType);
+                const option = document.createElement('div');
+                option.textContent = item.foodType;
+                if (selectedFoodType == item.foodType) {
+                    option.setAttribute('class', 'item');
+                    foodDetailFoodTypeText.textContent = selectedFoodType;
+                    foodDetailFoodTypeText.classList.remove('default');
+                    foodDetailFoodTypesInput.setAttribute('value', selectedFoodType);
+                } else {
+                    option.setAttribute('class', 'item');
+                }
+                option.setAttribute('data-value', item.foodType);
+                foodDetailFoodTypesDataBox.appendChild(option);
+            });
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+}
+
+function getWeightTypeToFoodDetailOptions() {
+    $.ajax({
+        type: 'GET',
+        url: '../weightTypes-json',
+        success: function (response) {
+            const selectedWeightType = document.getElementById("sel-food-detail-weight-type").innerHTML;
+            // console.log("foodtype response\n", response)
+            foodDetailWTypesDataBox.innerHTML = "";
+            foodDetailWTypesText.textContent = "Choose a weight type";
+            foodDetailWTypesText.classList.add('default');
+            
+            const weightTypesData = response.data;
+            weightTypesData.map(item => {
+                // console.log(item, "\n", item.weightType);
+                const option = document.createElement('div');
+                option.textContent = item.weightType;
+                if (selectedWeightType == item.weightType) {
+                    option.setAttribute('class', 'item');
+                    foodDetailWTypesText.textContent = selectedWeightType;
+                    foodDetailWTypesText.classList.remove('default');
+                    foodDetailWTypesInput.setAttribute('value', selectedWeightType);
+                } else {
+                    option.setAttribute('class', 'item');
+                }
+                option.setAttribute('data-value', item.weightType);
+                foodDetailWTypesDataBox.appendChild(option);
+            });
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+}
+
 function handleObjCreateError(obj, error){
     var tempMsgStart = `<div class="ui negative message">
     <div class="header">
@@ -771,3 +966,4 @@ function formatDateTime(date) {
         ].join(':')
     );
 }
+//#endregion

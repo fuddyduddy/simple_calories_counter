@@ -35,3 +35,19 @@ $('#meal-detail-form-datetime').calendar({
         return false;
     },
 });
+
+// $('#food-detail-form-date').calendar({
+//     type: 'date',
+//     // formatter: {
+//     //     cell: disabled
+//     // },
+//     isDisabled: function () {
+//         return false;
+//     },
+// });
+
+// $('#food-detail-form-datetime').calendar({
+//     isDisabled: function () {
+//         return false;
+//     },
+// });

@@ -36,6 +36,7 @@
 2023-03-02: readme update.<br>
 2023-03-05: Add Food Page & Food List Page updated.<br>
 2023-03-06: readme & photo update.<br>
+2023-04-06: Update food detail page (WIP)<br>
 <br>
 
 ### Screen Captures

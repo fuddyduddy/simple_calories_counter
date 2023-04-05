@@ -16,15 +16,20 @@ import json
 page_title = "Calorie Counter"
 data_not_found = "Data not found."
 
-# My views start here.
+# Index View (Home page)
 def index(request):
+    """ Home - index page """
     print(request)
     context = {
         "page_title": page_title
     }
     return render(request, 'index.html', context=context)
 
-# region commented def addFood(request)
+
+
+# region Food Related Views
+
+#   region commented def addFood(request)
 # def addFood(request):
 #     print(request)
 #     context = {
@@ -33,7 +38,7 @@ def index(request):
 #     return render(request, "calorie/addFood.html", context=context)
 # endregion
 
-# region AddFood (Templateview)
+#   region AddFood (Templateview)
 class AddFood(TemplateView):
     template_name = "calorie/addFood.html"
     ### Changed to Class Based View, need to handle page_title later.
@@ -44,7 +49,7 @@ class AddFood(TemplateView):
         return context
     
 def get_json_weightType_data(request):
-    """ For ajax get weightType (Model) as arrayList to addFood.html """
+    """ For ajax get weightType (Model) as arrayList to addFood.html / food_detail.html """
     # print("called view:- (get_json_weightType_data)")
     try:
         weightType_val = list(WeightType.objects.values())
@@ -113,9 +118,57 @@ def create_food(request):
         response[0]['error'] = "[Error] create_meal ajax error"
         print("[Error] create_meal ajax error")
         return HttpResponse(json.dumps(response))
-# endregion
-        
-# region Food List Page
+#   endregion
+
+#   region def food_edit(request, pk):
+def food_edit(request, pk):
+    """ POST for editing food model as per pk. """
+    response = [{
+        'url': f'/calorie/food_detail/{pk}'
+    }]
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        try:
+            print(request.POST)
+            # mealDate = request.POST.get('mealDate')
+            # mealDateTime = request.POST.get('mealDateTime')
+            # mealTime = request.POST.get('mealTime')
+            # multiplier = request.POST.get('multiplier')
+            # print(mealDate, mealDateTime, mealTime, multiplier)
+
+            # # Retrieve the MealTime instance for the selected meal time. (accept instance, not str)
+            # mealTime_obj = MealTime.objects.get(mealTime=mealTime)
+
+            # editedMeal = Meal.objects.get(pk=pk)
+            # # print(dir(editedMeal))
+            # # print(editedMeal.date)
+            # # print(editedMeal.datetimeNullable)
+            # # print(editedMeal.mealTime)
+            # # print(editedMeal.multiplier)
+            # # print("Original Meal Values.")
+
+            # editedMeal.date = mealDate
+            # editedMeal.datetimeNullable = mealDateTime
+            # editedMeal.mealTime = mealTime_obj
+            # editedMeal.multiplier = multiplier
+            # # print(editedMeal.date)
+            # # print(editedMeal.datetimeNullable)
+            # # print(editedMeal.mealTime)
+            # # print(editedMeal.multiplier)
+            # # print("After Meal Values.")
+            # editedMeal.save()
+
+            # return HttpResponse(json.dumps(response))
+        except Exception as e:
+            print("[Erorr] meal_update failed: " + e)
+            # return HttpResponse(json.dumps(response))
+            return JsonResponse({'created': False}, safe=False)
+    else:
+        print("[Error] meal_update ajax error")
+        return HttpResponse(json.dumps(response))
+#   endregion
+
+
+#   region Food List Page
 class FoodList(ListView):
     # template_name = "calorie/foodList.html"
     # ### Changed to Class Based View, need to handle page_title later.
@@ -141,14 +194,20 @@ def food_delete(request, pk):
         food.delete()
     return redirect('food_list')
     # return JsonResponse({'test': 'testing'})
-# endregion
+#   endregion
 
-# region Food Detail Page
+#   region Food Detail Page
 class FoodDetail(DetailView):
     model = Food
+#   endregion
+
 # endregion
 
-# region commented class AddMeal(TemplateView)
+#============================================================================================
+
+# region Meal Related Views
+
+#   region commented class AddMeal(TemplateView)
 # class AddMeal(TemplateView):
 #     template_name = "calorie/addMeal.html"
 #     ### Changed to Class Based View, need to handle page_title later.
@@ -159,7 +218,7 @@ class FoodDetail(DetailView):
 #         return context
 # endregion
 
-# region def AddMeal(request, *args, **kwargs):
+#   region def AddMeal(request, *args, **kwargs):
 def AddMeal(request):
     # # This is for Django Traditional form.as_p way.
     # foodType = FoodType.objects.all()
@@ -169,7 +228,7 @@ def AddMeal(request):
     return render(request, 'calorie/addMeal.html', {'dataNotFound': data_not_found})
 
 def get_json_foodType_data(request):
-    """ For ajax get foodType (Model) as arrayList to addMeal.html """
+    """ For ajax get foodType (Model) as arrayList to addMeal.html / food_detail.html """
     # print("called view:- (get_json_foodType_data)")
     try:
         foodType_val = list(FoodType.objects.values())
@@ -194,6 +253,8 @@ def get_json_food_data(request, *args, **kwargs):
     except Exception as e:
         print("[Error] get_json_food_data:\n",e)
         return JsonResponse({'data': [], 'status': False})
+
+
 
 def get_json_mealTime_data(request):
     try:
@@ -248,9 +309,11 @@ def create_meal(request):
         print("[Error] create_meal ajax error")
         return HttpResponse(json.dumps(response))
         # return JsonResponse({'created': False}, safe=False)
-# endregion
+#   endregion
 
+#   region def meal_edit(request, pk):
 def meal_edit(request, pk):
+    """ POST for editing meal model as per pk. """
     response = [{
         'url': f'/calorie/meal_detail/{pk}'
     }]
@@ -293,9 +356,11 @@ def meal_edit(request, pk):
     else:
         print("[Error] meal_update ajax error")
         return HttpResponse(json.dumps(response))
+#   endregion
 
-# region class-based view mealList
+#   region class-based view mealList
 class MealList(ListView):
+    """ For rendering meal_list.html """
     model = Meal
     template_name = 'calorie/meal_list.html'
     paginate_by = 10
@@ -319,7 +384,7 @@ def meal_delete(request, pk):
 
 # endregion
 
-# region commented MealList(TemplateView)
+#   region commented MealList(TemplateView)
 # class MealList(TemplateView):
 #     template_name = "calorie/mealList.html"
 #     ### Changed to Class Based View, need to handle page_title later.
@@ -328,6 +393,8 @@ def meal_delete(request, pk):
 #         #context['users'] = YourModel.objects.all()
 #         context["testContext"] = "test success"
 #         return context
+# endregion
+
 # endregion
 
 class ShowStatistics(TemplateView):

@@ -4,7 +4,7 @@ from django.urls import include, path
 from calorie import views
 from calorie.views import (
     AddFood, get_json_weightType_data, create_food,
-    FoodList, FoodDetail, food_delete,
+    FoodList, FoodDetail, food_delete, food_edit,
     AddMeal, get_json_foodType_data, get_json_food_data, get_json_mealTime_data, create_meal,
     MealList, MealDetail, meal_delete, meal_edit,
     ShowStatistics, LoginOrSignUp
@@ -35,6 +35,7 @@ urlpatterns += [
     path("food_list", FoodList.as_view(), name="food_list"),
     path("food_detail/<int:pk>", FoodDetail.as_view(), name="food_detail"),
     path("food_delete/<int:pk>", food_delete, name="food_delete"),
+    path("food_detail/<int:pk>/update", food_edit, name="food_edit"),
 ]
 
 urlpatterns += [

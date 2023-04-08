@@ -1,6 +1,6 @@
 console.log("main.js loaded.");
 
-/*** EveryTime Memo: The food detail fetch object with pk successful. Now need to do the main.js to POST and view.py to accept the POST ***/
+/*** EveryTime Memo: Now keep doing the main.js to POST and view.py to accept the POST at `${foodPK}/update` ***/
 
 //#region Global Var Section
     //#region index page - global var
@@ -110,6 +110,8 @@ console.log("main.js loaded.");
     //#endregion
 
     //#region food_detail view - global var
+    const editFoodDetailForm = document.getElementById('food-detail-form');
+
     const foodDetailView = document.getElementById('food-detail');
     const foodDetailFoodTypesDataBox = document.getElementById('food-detail-foodTypes-data-box');
     const foodDetailFoodTypesInput = document.getElementById('food-detail-foodTypes-dropdown');
@@ -150,7 +152,7 @@ console.log("main.js loaded.");
     //CONTINUE HERE, add all input fields here.
 
     const foodDetailBtnBox = document.getElementById('food-detail-btn-box');
-    const foodDetailBtn    = document.getElementById('food-detail-submit-btn');
+    // const foodDetailBtn    = document.getElementById('food-detail-submit-btn');
     //#endregion
 //#endregion
 
@@ -485,86 +487,87 @@ $(document).ready(function () {
     } else if (foodDetailView != null) {
         console.log("You're at food_detail.html");
         const foodPK = document.getElementById('food-detail-pk').innerText;
-        
+
         foodDetailFoodTypesInput
         getFoodTypeToFoodDetailOptions()
         getWeightTypeToFoodDetailOptions()
-
+        
         /* POST to save the edited food detail to model. */
-        // addFoodForm.addEventListener('submit', e => {
-        //     e.preventDefault();
-        //     const foodFormData = {
-        //         'csrfmiddlewaretoken': csrf[0].value,
-        //         'FoodType': addFoodFoodTypeText.textContent,
-        //         'Name': addFoodNameInput.value,
-        //         'Manufacturer': addFoodManufacturerInput.value,
-        //         'WeightType': addFoodWTypesText.textContent,
-        //         'WPM': addFoodWPMInput.value,
-        //         'Calories': addFoodCaloriesInput.value,
-        //         'Protein': addFoodProteinInput.value, 
-        //         'Fat': addFoodFatInput.value, 
-        //         'SaturatedFat': addFoodSaturatedFatInput.value, 
-        //         'TransFat': addFoodTransFatInput.value, 
-        //         'Carbohydrates': addFoodCarbohydratesInput.value, 
-        //         'Sodium': addFoodSodiumInput.value, 
-        //         'VitaminB1': addFoodVitaminB1Input.value, 
-        //         'VitaminB2': addFoodVitaminB2Input.value, 
-        //         'VitaminB3': addFoodVitaminB3Input.value,
-        //     }
+        editFoodDetailForm.addEventListener('submit', e => {
+            e.preventDefault();
+            const foodDetailFormData = {
+                'csrfmiddlewaretoken': csrf[0].value,
+                'FoodType': foodDetailFoodTypeText.textContent,
+                'Name': foodDetailNameInput.value,
+                'Manufacturer': foodDetailManufacturerInput.value,
+                'WeightType': foodDetailWTypesText.textContent,
+                'WPM': foodDetailWPMInput.value,
+                'Calories': foodDetailCaloriesInput.value,
+                'Protein': foodDetailProteinInput.value, 
+                'Fat': foodDetailFatInput.value, 
+                'SaturatedFat': foodDetailSaturatedFatInput.value, 
+                'TransFat': foodDetailTransFatInput.value, 
+                'Carbohydrates': foodDetailCarbohydratesInput.value, 
+                'Sodium': foodDetailSodiumInput.value, 
+                'VitaminB1': foodDetailVitaminB1Input.value, 
+                'VitaminB2': foodDetailVitaminB2Input.value, 
+                'VitaminB3': foodDetailVitaminB3Input.value,
+            }
+            console.log(foodDetailFormData);
 
-        //     /*** ajax call (POST) to add a Food record ***/
-        //     $.ajax({
-        //         type: 'POST',
-        //         url: 'createFood',
-        //         data: foodFormData,
-        //         success: function(response){
-        //             const redirect_url = JSON.parse(response)[0].url;
-        //             const result = JSON.parse(response)[0].success;
-        //             const error_str = JSON.parse(response)[0].error;
-        //             //console.log(response);
+            /*** ajax call (POST) to add a Food record ***/
+            $.ajax({
+                type: 'POST',
+                url: `${foodPK}/update`,
+                data: foodDetailFormData,
+                success: function(response){
+                    const redirect_url = JSON.parse(response)[0].url;
+                    const result = JSON.parse(response)[0].success;
+                    const error_str = JSON.parse(response)[0].error;
+                    console.log(response);
                     
-        //             //#region Add form validation here.
-        //                 console.log(foodFormData);
-        //             //#endregion
+                    //#region Add form validation here.
+                        console.log(foodDetailFormData);
+                    //#endregion
 
-        //             if (!result) {
-        //                 handleObjCreateError('food', error_str);
-        //             } else {
-        //                 addFoodAlertBox.innerHTML = `<div class="ui positive message">
-        //                 <div class="header">
-        //                 Success
-        //                 </div>
-        //                 <p>Your food has been recorded. You can select the food later in your meal.</p>
-        //                 <p>Your connection will be redirect in 3 sec.</p>
-        //                 </div>`;
-        //                 setTimeout(e=>{
-        //                     addFoodFoodTypesInput.classList.add('disabled');
-        //                     addFoodNameTxtF.classList.add('disabled');
-        //                     addFoodManufacturerTxtF.classList.add('disabled');
-        //                     addFoodWTypesInput.classList.add('disabled');
-        //                     addFoodWPMTxtF.classList.add('disabled');
-        //                     addFoodCaloriesTxtF.classList.add('disabled');
-        //                     addFoodProteinTxtF.classList.add('disabled');
-        //                     addFoodFatTxtF.classList.add('disabled');
-        //                     addFoodSaturatedFatTxtF.classList.add('disabled');
-        //                     addFoodTransFatTxtF.classList.add('disabled');
-        //                     addFoodCarbohydratesTxtF.classList.add('disabled');
-        //                     addFoodSodiumTxtF.classList.add('disabled');
-        //                     addFoodVitaminB1TxtF.classList.add('disabled');
-        //                     addFoodVitaminB2TxtF.classList.add('disabled');
-        //                     addFoodVitaminB3TxtF.classList.add('disabled');
-        //                     addFoodBtnBox.classList.add('not-visible');
-        //                 }, 1);
-        //                 setTimeout( e => {
-        //                     window.location = redirect_url;
-        //                 }, 3000);
-        //             }
-        //         },
-        //         error: function(e){
-        //             handleObjCreateError('food', e);
-        //         }
-        //     })
-        // });
+                    if (!result) {
+                        handleObjCreateError('foodDetail', error_str);
+                    } else {
+                        foodDetailAlertBox.innerHTML = `<div class="ui positive message">
+                        <div class="header">
+                        Success
+                        </div>
+                        <p>Your food has been edited. You can select the food later in your meal.</p>
+                        <p>Your connection will be redirect in 3 sec.</p>
+                        </div>`;
+                        setTimeout(e=>{
+                            foodDetailFoodTypesInput.classList.add('disabled');
+                            foodDetailNameTxtF.classList.add('disabled');
+                            foodDetailManufacturerTxtF.classList.add('disabled');
+                            foodDetailWTypesInput.classList.add('disabled');
+                            foodDetailWPMTxtF.classList.add('disabled');
+                            foodDetailCaloriesTxtF.classList.add('disabled');
+                            foodDetailProteinTxtF.classList.add('disabled');
+                            foodDetailFatTxtF.classList.add('disabled');
+                            foodDetailSaturatedFatTxtF.classList.add('disabled');
+                            foodDetailTransFatTxtF.classList.add('disabled');
+                            foodDetailCarbohydratesTxtF.classList.add('disabled');
+                            foodDetailSodiumTxtF.classList.add('disabled');
+                            foodDetailVitaminB1TxtF.classList.add('disabled');
+                            foodDetailVitaminB2TxtF.classList.add('disabled');
+                            foodDetailVitaminB3TxtF.classList.add('disabled');
+                            foodDetailBtnBox.classList.add('not-visible');
+                        }, 1);
+                        setTimeout( e => {
+                            window.location = redirect_url;
+                        }, 3000);
+                    }
+                },
+                error: function(e){
+                    handleObjCreateError('food', e);
+                }
+            })
+        });
     }
     ;
     //#endregion
@@ -928,6 +931,10 @@ function handleObjCreateError(obj, error){
         console.log('createFood Error:\n', error);
         const errorBoxMsg = tempMsgStart + error + tempMsgEnd;
         addFoodAlertBox.innerHTML = errorBoxMsg;
+    } else if (obj == 'foodDetail') {
+        console.log('food edit Error:\n', error);
+        const errorBoxMsg = tempMsgStart + error + tempMsgEnd;
+        foodDetailAlertBox.innerHTML = errorBoxMsg;
     }
 }
 

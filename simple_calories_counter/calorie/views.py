@@ -124,42 +124,72 @@ def create_food(request):
 def food_edit(request, pk):
     """ POST for editing food model as per pk. """
     response = [{
-        'url': f'/calorie/food_detail/{pk}'
+        'url': f'/calorie/food_detail/{pk}',
+        'success': False,
+        'error': ''
     }]
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
         try:
-            print(request.POST)
-            # mealDate = request.POST.get('mealDate')
-            # mealDateTime = request.POST.get('mealDateTime')
-            # mealTime = request.POST.get('mealTime')
-            # multiplier = request.POST.get('multiplier')
-            # print(mealDate, mealDateTime, mealTime, multiplier)
+            # print(request.POST)
+            foodType_str = request.POST.get('FoodType')
+            name_obj = request.POST.get('Name')
+            manufacturer_obj = request.POST.get('Manufacturer')
+            weightType_str = request.POST.get('WeightType')
+            WPM_obj = request.POST.get('WPM')
+            calories_obj = request.POST.get('Calories')
+            protein_obj = request.POST.get('Protein')
+            fat_obj = request.POST.get('Fat')
+            saturatedFat_obj = request.POST.get('SaturatedFat')
+            transFat_obj = request.POST.get('TransFat')
+            carbohydrates_obj = request.POST.get('Carbohydrates')
+            sodium_obj = request.POST.get('Sodium')
+            vitaminB1_obj = request.POST.get('VitaminB1')
+            vitaminB2_obj = request.POST.get('VitaminB2')
+            vitaminB3_obj = request.POST.get('VitaminB3')
+            foodType_obj = FoodType.objects.get(foodType=foodType_str)
+            weightType_obj = WeightType.objects.get(weightType=weightType_str)
+            # print(foodType_str)
+            # print(name_obj)
+            # print(manufacturer_obj)
+            # print(weightType_str)
+            # print(WPM_obj)
+            # print(calories_obj)
+            # print(protein_obj)
+            # print(fat_obj)
+            # print(saturatedFat_obj)
+            # print(transFat_obj)
+            # print(carbohydrates_obj)
+            # print(sodium_obj)
+            # print(vitaminB1_obj)
+            # print(vitaminB2_obj)
+            # print(vitaminB3_obj)
+            # print(foodType_obj)
+            # print(weightType_obj)
 
-            # # Retrieve the MealTime instance for the selected meal time. (accept instance, not str)
-            # mealTime_obj = MealTime.objects.get(mealTime=mealTime)
+            editedFood = Food.objects.get(pk=pk)
 
-            # editedMeal = Meal.objects.get(pk=pk)
-            # # print(dir(editedMeal))
-            # # print(editedMeal.date)
-            # # print(editedMeal.datetimeNullable)
-            # # print(editedMeal.mealTime)
-            # # print(editedMeal.multiplier)
-            # # print("Original Meal Values.")
-
-            # editedMeal.date = mealDate
-            # editedMeal.datetimeNullable = mealDateTime
-            # editedMeal.mealTime = mealTime_obj
-            # editedMeal.multiplier = multiplier
-            # # print(editedMeal.date)
-            # # print(editedMeal.datetimeNullable)
-            # # print(editedMeal.mealTime)
-            # # print(editedMeal.multiplier)
-            # # print("After Meal Values.")
-            # editedMeal.save()
-
-            # return HttpResponse(json.dumps(response))
+            editedFood.name = name_obj
+            editedFood.manufacturer = manufacturer_obj
+            editedFood.weightPerMeal = WPM_obj
+            editedFood.calories = calories_obj
+            editedFood.protein = protein_obj
+            editedFood.fat = fat_obj
+            editedFood.saturatedFat = saturatedFat_obj
+            editedFood.transFat = transFat_obj
+            editedFood.carbohydrates = carbohydrates_obj
+            editedFood.sodium = sodium_obj
+            editedFood.vitaminB1 = vitaminB1_obj
+            editedFood.vitaminB2 = vitaminB2_obj
+            editedFood.vitaminB3 = vitaminB3_obj
+            editedFood.foodType = foodType_obj
+            editedFood.weightType = weightType_obj
+            editedFood.save()
+            response[0]['success'] = True
+            return HttpResponse(json.dumps(response))
         except Exception as e:
+            response[0]['success'] = True
             print("[Erorr] meal_update failed: " + e)
+            response[0]['error'] = "[Erorr] edit food failed: " + str(e)
             # return HttpResponse(json.dumps(response))
             return JsonResponse({'created': False}, safe=False)
     else:

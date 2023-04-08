@@ -10,7 +10,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md">
-            <div id="alert-box"></div>
+            <div id="food-detail-alert-box"></div>
             <form class="mt-5" id="food-detail-form">
                 {% csrf_token %}
                 <div class="form-header">Food ID:</div>
@@ -104,7 +104,7 @@
                     <input type="text" id="food-detail-vitaminB3-input" name="food-detail-vitaminB3" placeholder="Please enter vitaminB3" value={{ food.vitaminB3 | default:"0.00" }} pattern="^\d*(\.\d{0,2})?$">
                 </div>
                 <div><br /></div>
-                <div id="btn-foodDetail-box" class="mt-5">
+                <div id="food-detail-btn-box" class="mt-5">
                     <button type="submit" class="ui primary button">save</button>
                 </div>
             </form>

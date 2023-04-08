@@ -26,6 +26,7 @@
         </tr>
         <!-- <tr><td style="width:120px"></td><td style="width:1px; vertical-align: top;">&bull;</td><td style="width:170px; vertical-align: top;"><b>:</b></td><td></td></tr> -->
         <tr><td style="width:120px"></td><td style="width:1px; vertical-align: top;">&bull;</td><td style="width:170px; vertical-align: top;"><b>Form validation:</b></td><td>Form validation for addMeal and addFood pages.</td></tr>
+        <tr><td style="width:120px"></td><td style="width:1px; vertical-align: top;">&bull;</td><td style="width:170px; vertical-align: top;"><b>Static Files:</b></td><td>Changing static files fetch from CDN sources to local files.</td></tr>
     </tbody>
 </table>
 <br>
@@ -36,7 +37,7 @@
 2023-03-02: readme update.<br>
 2023-03-05: Add Food Page & Food List Page updated.<br>
 2023-03-06: readme & photo update.<br>
-2023-04-06: Update Food Detail page (WIP).<br>
+2023-04-06: Update Food Detail page (WIP).aaa<br>
 2023-04-08: Food Detail page completed, edit & delete Food available.
 <br>
 

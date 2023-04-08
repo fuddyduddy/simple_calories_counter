@@ -157,6 +157,10 @@ console.log("main.js loaded.");
 //#endregion
 
 $(document).ready(function () {
+    //test code
+    var rootUrl = window.location.origin;
+    console.log(rootUrl);
+
     //#region index page
     if (indexPage != null) {
         console.log("You're at index page.");

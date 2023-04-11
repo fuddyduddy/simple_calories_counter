@@ -45,6 +45,7 @@ class AddFood(TemplateView):
     def get_context_data(self,*args, **kwargs):
         context = super(AddFood, self).get_context_data(*args,**kwargs)
         #context['users'] = YourModel.objects.all()
+        context["page_title"] = page_title
         context["testContext"] = "test success"
         return context
     
@@ -148,23 +149,6 @@ def food_edit(request, pk):
             vitaminB3_obj = request.POST.get('VitaminB3')
             foodType_obj = FoodType.objects.get(foodType=foodType_str)
             weightType_obj = WeightType.objects.get(weightType=weightType_str)
-            # print(foodType_str)
-            # print(name_obj)
-            # print(manufacturer_obj)
-            # print(weightType_str)
-            # print(WPM_obj)
-            # print(calories_obj)
-            # print(protein_obj)
-            # print(fat_obj)
-            # print(saturatedFat_obj)
-            # print(transFat_obj)
-            # print(carbohydrates_obj)
-            # print(sodium_obj)
-            # print(vitaminB1_obj)
-            # print(vitaminB2_obj)
-            # print(vitaminB3_obj)
-            # print(foodType_obj)
-            # print(weightType_obj)
 
             editedFood = Food.objects.get(pk=pk)
 
@@ -216,6 +200,11 @@ class FoodList(ListView):
         qs = qs.order_by("-id")
         return qs
     
+    def get_context_data(self, **kwargs):
+        context = super(FoodList, self).get_context_data(**kwargs)
+        context["page_title"] = page_title
+        return context
+    
 def food_delete(request, pk):
     print(pk)
     food = Food.objects.get(pk=pk)
@@ -255,7 +244,11 @@ def AddMeal(request):
     # return render(request, 'calorie/addMeal.html', {'fType': foodType})
     foodType_val = list(FoodType.objects.values())
     # print("Testing\n", foodType_val)
-    return render(request, 'calorie/addMeal.html', {'dataNotFound': data_not_found})
+    context = {
+        "page_title": page_title,
+        'dataNotFound': data_not_found
+    }
+    return render(request, 'calorie/addMeal.html', context=context)
 
 def get_json_foodType_data(request):
     """ For ajax get foodType (Model) as arrayList to addMeal.html / food_detail.html """
@@ -399,6 +392,11 @@ class MealList(ListView):
         qs = super(MealList, self).get_queryset(*args, **kwargs)
         qs = qs.order_by("-id")
         return qs
+    
+    def get_context_data(self, **kwargs):
+        context = super(MealList, self).get_context_data(**kwargs)
+        context["page_title"] = page_title
+        return context
 
 class MealDetail(DetailView):
     model = Meal
@@ -433,6 +431,7 @@ class ShowStatistics(TemplateView):
     def get_context_data(self,*args, **kwargs):
         context = super(ShowStatistics, self).get_context_data(*args,**kwargs)
         #context['users'] = YourModel.objects.all()
+        context["page_title"] = page_title
         context["testContext"] = "test success"
         return context
 
@@ -442,5 +441,6 @@ class LoginOrSignUp(TemplateView):
     def get_context_data(self,*args, **kwargs):
         context = super(LoginOrSignUp, self).get_context_data(*args,**kwargs)
         #context['users'] = YourModel.objects.all()
+        context["page_title"] = page_title
         context["testContext"] = "test success"
         return context

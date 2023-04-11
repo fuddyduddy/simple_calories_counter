@@ -57,7 +57,7 @@
     <script src="{% static 'semantic.js' %}" defer></script>
     <link rel="stylesheet" href="{% static 'style.css' %}">
     
-    <title>{{ page_title }}</title>
+    <title>{% block title %}Calories Counter{% endblock %}</title> <!-- A few ms still showing the ip address, seek solution later. -->
 </head>
 <body>
     <nav class="navbar navbar-expand-xl navbar-light bg-light">

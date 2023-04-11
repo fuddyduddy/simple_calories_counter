@@ -5,7 +5,7 @@ from django.urls import reverse
 from django.core.validators import MinLengthValidator, MinValueValidator
 
 
-#region === Create models here. ===
+#region === Food & Meal related models here. ===
 class FoodType(models.Model):
     foodType = models.CharField(max_length=50) #, unique=True)
     ordering = models.DecimalField(max_digits=4, decimal_places=0, blank=True, null=True)
@@ -179,4 +179,18 @@ class MealTime(models.Model):
         #return self.name
         return f"{self.mealTime}"
 
+#endregion
+
+
+#region User related model here.
+# class User(models.Model):
+#     first_name = models.CharField(max_length=50)
+#     last_name = models.CharField(max_length=50)
+#     email = models.EmailField(unique=True)
+#     is_active = models.BooleanField(default=True)
+#     is_staff = models.BooleanField(default=False)
+#     date_joined = models.DateTimeField(auto_now_add=True)
+#     created_at = models.DateTimeField()
+#     updated_at = models.DateTimeField()
+    
 #endregion
